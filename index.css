@@ -53,3 +53,12 @@ li {
   padding: 5px;
   padding-top: 10px;
 }
+
+.h1 {
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+
+.h2 {
+  -webkit-font-smoothing: subpixel-antialiased;
+}
