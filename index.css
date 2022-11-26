@@ -40,6 +40,7 @@ li {
 /* Clear floats after image containers */
 .row {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .thumb {
