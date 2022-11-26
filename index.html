@@ -8,49 +8,126 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 </head>
 <body>
-
-    <img src="photo.jpg" width="200" height="200">
-    <h1>Ezra Winston</h1>
-    <p> <a href="mailto:exwinston@cs.cmu.edux" onmouseover="this.href=this.href.replace(/x/g,'');">Contact</a></p>
-    <p>
-        PhD student in the <a href="http://ml.cmu.edu">CMU machine learning department</a>, advised by <a href="http://www.zicokolter.com">Zico Kolter</a>.
-    </p>
+    <div class="row">
+        <div class="photo" style="width:170px">
+            <img src="images/photo.jpg" width="170" height="170">
+        </div>
+        <div class="column2" style="padding-top:0px;color:black">
+            <h1 style="margin-bottom:5px;margin-top:10px">Ezra Winston</h1>
+            <p style="margin-top:5px;margin-left:2px"> <a href="mailto:exwinston@cs.cmu.edux" onmouseover="this.href=this.href.replace(/x/g,'');">contact</a></p>
+            <p style="margin-top:20px;margin-left:2px;margin-right:10px">
+                I'm a PhD student in the <a href="http://ml.cmu.edu">CMU ML department</a>, advised by <a href="http://www.zicokolter.com">Zico Kolter</a>. I'm interested in developing our fundamental understanding of deep learning, both through theory and experimentation. My current focus is on transformers, starting from basic questions like representation capacity and the role of dynamic sparse attention. I've also worked on novel, mathematically-principled approaches to deep learning in areas like equilibrium models, certifiable robustness, data poisoning, and domain adaptation.
+            </p>
+        </div>
+    </div>
     <hr>
-    <h2>Research</h2>
+    <h2>ML publications </h2>
     <ul>
+        <li><a href="https://proceedings.neurips.cc/paper/2021/hash/d064bf1ad039ff366564f352226e7640-Abstract.html">Local Signal Adaptivity: Provable Feature Learning in Neural Networks Beyond Kernels</a>. Stefani Karp, Ezra Winston, Yuanzhi Li & Aarti Singh
+            <br/>
+            NeurIPS 2021.&emsp;<a href="https://github.com/skarp/local-signal-adaptivity">code</a>&emsp;<a href="https://mlfoundations.org/talk/singh/">talk</a>
+            <div class="row" > 
+                <div class="column1">
+                    <img class="thumb" src="images/lsa.png" width="85" height="85" style="padding:5px;opacity:0.75">
+                </div>
+                <div class="column2">
+                    We offer a theoretical explanation for the performance gap between NNs and NTKs, based on finding a sparse signal in the presence of noise. On a simple data distribution with a sparse signal amidst high-variance noise, a simple CNN trained with SGD learns to threshold out the noise and find the signal. On the other hand, the corresponding NTK, with a fixed set of predetermined features, is unable to adapt to the signal.
+                </div>
+            </div>
+        </li>
         <li><a href="https://openreview.net/pdf?id=VcB4QkSfyO"> Estimating Lipschitz constants of monotone deep equilibrium models</a>. Chirag Pabbaraju&#42;, Ezra Winston&#42; & J. Zico Kolter<br/>
             ICLR 2021.&emsp;<a href="https://github.com/locuslab/lipschitz_mondeq">code</a>
         </li>
-        <li><a href="https://proceedings.neurips.cc//paper_files/paper/2020/hash/798d1c2813cbdf8bcdb388db0e32d496-Abstract.html"> Monotone operator equilibrium networks</a>. Ezra Winston & J. Zico Kolter<br/>
-            NeurIPS 2020.&emsp;<a href="https://github.com/locuslab/monotone_op_net">code</a>&emsp;<a href="https://nips.cc/virtual/2020/public/poster_798d1c2813cbdf8bcdb388db0e32d496.html">talk</a>
+        <li><a href="https://proceedings.neurips.cc/paper/2020/hash/798d1c2813cbdf8bcdb388db0e32d496-Abstract.html"> Monotone operator equilibrium networks</a>. Ezra Winston & J. Zico Kolter<br/>
+            NeurIPS 2020.&emsp;<a href="https://github.com/locuslab/monotone_op_net">code</a>&emsp;<a href="https://nips.cc/virtual/2020/public/poster_798d1c2813cbdf8bcdb388db0e32d496.html">spotlight talk</a>
+            <div class="row" > 
+                <div class="column1">
+                    <img class="thumb" src="images/mondeq.png" width="85" height="85" style="padding:7px 5px 3px 5px">
+                </div>
+                <div class="column2">
+                    Deep equilibrium models suffer from unstable convergence and lack guarantees that a solution exists. We develop a new class of implicit-depth model based on monotone-operator theory. There is a close connection between finding the equilibrium point of an implicit network and solving a form of monotone operator splitting problem, which admits efficient solvers with guaranteed, stable convergence. We show how to parameterize models such as CNNs to guarantee monotonicity, and how to implement the resulting iterative solvers.
+                </div>
+            </div>
         </li>
         <li><a href="https://arxiv.org/abs/2002.03018">Certified Robustness to Label-Flipping Attacks via Randomized Smoothing</a>. Elan Rosenfeld, Ezra Winston, Pradeep Ravikumar & J. Zico Kolter <br/>
             ICML 2020.&emsp;<a href="https://icml.cc/virtual/2020/poster/6172">talk</a>
         </li>
         <li><a href="http://proceedings.mlr.press/v97/wu19f.html"> Domain Adaptation with Asymmetrically-Relaxed Distribution Alignment</a>. Yifan Wu, Ezra Winston, Divyansh Kaushik & Zachary Lipton<br/>
            ICML 2019.
+           <div class="row" > 
+                <div class="column1">
+                    <img class="thumb" src="images/arda.png" width="85" height="85" style="padding:7px 5px 3px 5px">
+                </div>
+                <div class="column2">
+                    Adversarial approaches to domain adaptation consist of aligning source and target encodings, often motivated as minimizing two (of three) terms in a theoretical bound on target error. Unfortunately, this minimization can cause arbitrary increases in the third term, a problem guaranteed to arise under shifting label distributions. We propose asymmetrically-relaxed distribution alignment, a new approach that overcomes some limitations of standard domain-adversarial algorithms.
+                </div>
+            </div>
         </li>
-        <li><a href="https://www.semanticscholar.org/paper/Answering-Cloze-style-Software-Questions-Using-Winston-Dhingra/f66a17836380c0c79c1b42a9219cf8fde6524287"> Answering Cloze-style Software Questions Using Stack Overflow.</a>. Ezra Winston, Bhuwan Dhingra, Kathryn Mazaitis, Graham Neubig & William W. Cohen<br/>
+        <li><a href="https://www.semanticscholar.org/paper/Answering-Cloze-style-Software-Questions-Using-Winston-Dhingra/f66a17836380c0c79c1b42a9219cf8fde6524287"> Answering Cloze-style Software Questions Using Stack Overflow</a>. Ezra Winston, Bhuwan Dhingra, Kathryn Mazaitis, Graham Neubig & William W. Cohen<br/>
            Machine Learning for Programming Workshop, FLOC 2018.&emsp;<a href="https://youtu.be/QWt6rrri0dI">talk</a>
         </li>
-        <li>Cloze Question Answering Using Weak Knowledge and a Language Model. Ezra Winston, Bhuwan Dhingra, Kathryn Mazaitis, Graham Neubig & William W. Cohen<br/>
-            Preprint available soon.
+        
+    </ul>
+    <hr>
+    <h2>ML preprints and projects</h2>
+    <ul>
+        <li><a href="files/mdbm.pdf">Monotone deep Boltzmann machines</a>. Zhili Feng, Ezra Winston & J. Zico Kolter.<br/>
+            preprint. 
+            <div class="row" > 
+                <div class="column1">
+                    <img class="thumb" src="images/mdbm.png" width="85" height="85" style="padding:5px">
+                </div>
+                <div class="column2">
+                    We develop the monotone DBM, which, unlike the RBM, allows for arbitrary self-connection in each layer, but which restricts the weights in a manner that guarantees the existence and global uniqueness of a mean-field fixed point. To do this, we leverage the monotone Deep Equilibrium model, and show that a particular choice of activation results in a fixed-point iteration that gives a variational mean-field solution. This approach allows for efficient approximate inference in fully-general weight structures for DBMs.
+                </div>
+            </div>
+        </li>
+        <li><u>Provable adversarial L2 robustness by propagating ellipsoids</u>. Ezra Winston, Eric Wong, & J. Zico Kolter<br/>
+            <div class="row" > 
+                <div class="column1">
+                    <img class="thumb" src="images/ellipses.png" width="85" height="85" style="padding:5px">
+                </div>
+                <div class="column2">
+                    While infinity-norm robustness of NNs can be certified and directly optimized by methods such as interval bound propagation, these approximations do not work for L2-norm robustness. We investigate the feasibility of a solution based on ellipsoid propagation (see <a href="files/ellipsoid_slides.pdf">slides</a>). By replacing ReLU  with halfspace-projection, ellipsoid propagation can be approximated using a set of close-formed, low-rank updates (outlined <a href="files/ellipsoids.pdf">here</a>). The approach works well for MNIST but scaling further seems challenging. 
+                </div>
+            </div>
         </li>
         <li><a href="https://arxiv.org/abs/1705.00634">Counterfactual-based Incrementality Measurement in a Digital Ad-Buying Platform</a>. Prasad Chalasani, Ari Buchalter, Jaynth Thiagarajan & Ezra Winston <br/>
             arXiv preprint, 2017.
         </li>
-        <li><a href="https://doi.org/10.1016/j.tcs.2014.10.038">A framework for co-optimization algorithm performance and its application to worst-case optimization</a>. Elena Popovici & Ezra Winston <br/>
-            Theoretical Computer Science, vol. 567, 2015.
-        </li>
-        <li><a href="https://doi.org/10.11575/cdm.v7i1.61906">Deformations of associahedra and visibility graphs</a>. Satyan L. Devadoss, Rahul Shah, Xuancheng Shao & Ezra Winston.<br/>
-            Contributions to Discrete Mathematics, vol. 7(1), 2012.
-        </li>
-        <li><a href="https://dl.acm.org/doi/10.1145/1967654.1967659">On the practicality of optimal output mechanisms for co-optimization algorithms</a>. Elena Popovici, Ezra Winston & Anthony Bucci<br/>
-            FOGA, 2012.</li>
-        <li><a href="https://doi.org/10.1090/S0002-9947-2010-05253-5">Linear inequalities for enumerating chains in partially ordered sets</a>. Samuel K. Hsiao, Lauren Rose, Rachel Stahl and Ezra M. Winston<br/>
-            Transactions of the American Mathematical Society, vol. 363, 2011.
+        <li><a href="files/case_qa.pdf">Cloze Question Answering Using Weak Knowledge and a Language Model</a>. Ezra Winston, Bhuwan Dhingra, Kathryn Mazaitis, Graham Neubig & William W. Cohen<br/>
+                preprint.
         </li>
     </ul>
-
+    <hr>
+            <img class="thumb" src="images/assc.png" width="160" height="160" style="padding:5px;margin-left:10px;margin-top:20px" align="right">
+            <h2>Other publications</h2>
+            <ul>
+                <li><a href="https://doi.org/10.1016/j.tcs.2014.10.038">A framework for co-optimization algorithm performance and its application to worst-case optimization</a>. Elena Popovici & Ezra Winston <br/>
+                    Theoretical Computer Science, vol. 567, 2015.
+                </li>
+                <li><a href="https://dl.acm.org/doi/10.1145/1967654.1967659">On the practicality of optimal output mechanisms for co-optimization algorithms</a>. Elena Popovici, Ezra Winston & Anthony Bucci<br/>
+                    FOGA, 2012.</li>
+                <li><a href="https://doi.org/10.11575/cdm.v7i1.61906">Deformations of associahedra and visibility graphs</a>. Satyan L. Devadoss, Rahul Shah, Xuancheng Shao & Ezra Winston.<br/>
+                    Contributions to Discrete Mathematics, vol. 7(1), 2012.
+                </li>
+                <li><a href="https://doi.org/10.1090/S0002-9947-2010-05253-5">Linear inequalities for enumerating chains in partially ordered sets</a>. Samuel K. Hsiao, Lauren Rose, Rachel Stahl and Ezra M. Winston<br/>
+                    Transactions of the American Mathematical Society, vol. 363, 2011.
+                </li>
+            </ul>
+            
+    </div> 
+    <hr>
+    
+    <img class="thumb" src="images/patent.png" width="146" height="146" style="padding:12px;margin-left:10px;margin-top:20px" align="right">
+    <h2>Patents</h2>
+    <ul>
+        <li><a href="https://patents.google.com/patent/US11468276B2">System and method of a monotone operator neural network</a>. US patent no. US11468276B2
+        </li>    
+        <li><a href="https://patents.google.com/patent/US20210089842A1">Method and system to classify sensor data with improved training robustness</a>. US patent app. no. US20210089842A1
+        </li>
+        <li><a href="https://patents.google.com/patent/US10977697B2">Methods, systems, and devices for counterfactual-based incrementality measurement in digital ad-bidding platform</a>. US patent no. US10977697B2
+        </li>
+    </ul>
 </body>
 </html>
