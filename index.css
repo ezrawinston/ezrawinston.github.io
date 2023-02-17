@@ -3,6 +3,7 @@ body {
   max-width: 900px;
   min-width: 380px;
   margin-left: 15px;
+  margin-right: 15px;
   margin-bottom:100px;
 }
 /*li:not(:last-child) {
