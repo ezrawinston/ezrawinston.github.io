@@ -1,6 +1,7 @@
 body {
   font-family: 'Lato', sans-serif;
   max-width: 900px;
+  min-width: 380px;
   margin-left: 15px;
   margin-bottom:100px;
 }
@@ -30,25 +31,36 @@ li {
 
 .column2 {
   float: left;
-  width: 700px;
+  flex: 1 1 400px;
+  max-width: 700px;
   padding-left: 10px;
   padding-top: 15px;
   color: rgb(90,90,90);
   font-size: 0.9em;
 }
 
-/* Clear floats after image containers */
 .row {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+}
+
+.row0 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .thumb {
   border: 1.25px dotted rgb(191,191,191);
 }
 
+.bigthumb {
+  border: 1.25px dotted rgb(191,191,191);
+}
+
 .photo {
-  float: left;
+  float: left;  
   width: 100px;
   padding: 5px;
   padding-top: 10px;
