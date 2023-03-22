@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript"
             src="https://cdn.jsdelivr.net/npm/brython@3.11.0/brython.min.js">
     </script>
@@ -19,6 +20,7 @@ import random
 
 document <= html.H2("PathWord")
 document <= html.BR()
+
 
 def stops(ij,kl):
     i,j=ij
@@ -55,7 +57,6 @@ idx = lambda i,j: '{}{}'.format(i,j)
 
 gs = 5
 wl = 5
-wf = open('wordle-answers-alphabetical.txt','r')
 words = [w.strip() for w in open('wordle-answers-alphabetical.txt','r')]
 word = random.choice(words)
 abc = [x for x in "abcdefghijklmnopqrstuvwxyz"]
