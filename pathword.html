@@ -180,15 +180,15 @@ document <= html.H4("steps: 0",id="steps")
 @bind(document["in_button"], "click")
 def click(ev):
     document['error'].text = ""
-    v = document["in_box"].value
+    v = document["in_box"].value.lower()
     try:
         document["in_box"].value=""
         validate(v)
         step(v)
         document['in_box'].focus()
-    except ValueError:
+    except Exception:
         document["in_box"].value=""
-        document['error'].text = "move up to 3 spaces orthogonally or diagonally. enter lowercase letter."
+        document['error'].text = "Move up to 3 spaces orthogonally or diagonally. Enter a single letter."
         document['in_box'].focus()
 
 @bind(document["in_box"], "keyup")
