@@ -184,14 +184,17 @@ def click(ev):
         document["in_box"].value=""
         validate(v)
         step(v)
+        document['in_box'].focus()
     except ValueError:
         document["in_box"].value=""
         document['error'].text = "move up to 3 spaces orthogonally or diagonally. enter lowercase letter."
+        document['in_box'].focus()
 
 @bind(document["in_box"], "keyup")
 def keyup(ev):
     if ev.key == "Enter":
         click(ev)
+        document['in_box'].focus()
 
 for i in range(1):
     document <= html.BR()
