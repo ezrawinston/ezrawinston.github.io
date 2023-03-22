@@ -88,14 +88,14 @@ def step(next_letter):
     global done
     global steps
     k,l = argwhere(grid,next_letter)
-    document[idx(k,l)].style.border =  "1.5px solid Black"
+    document[idx(k,l)].style.border =  "2.5px double Black"
     if is_first:
         is_first = False
         current_letter = next_letter
         document['in_text'].text = "choose next letter"
         return
     i,j = argwhere(grid,current_letter)
-    document[idx(i,j)].style.border =  "1.5px solid White"
+    document[idx(i,j)].style.border =  "2.5px solid White"
     current_letter = next_letter
     guessed = guessed.union({grid[i][j] for (i,j) in stops((i,j),(k,l))})
     for n,w in enumerate(word):
@@ -153,7 +153,7 @@ for i in range(2):
 
 document <=  html.TABLE(id="grid")
 for i,row in enumerate(grid):
-    document['grid'] <= html.TR(html.TD(x,style="padding: 5px 10px 5px 10px;border: 1.5px solid White; margin: 0.5px",id=str(i)+str(j)) for j,x in enumerate(row))
+    document['grid'] <= html.TR(html.TD(x,style="padding: 3px 8px 3px 8px;border: 2.5px solid White; margin: 0.5px",id=str(i)+str(j)) for j,x in enumerate(row))
 
 for i in range(1):
     document <= html.BR()
