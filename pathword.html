@@ -220,7 +220,8 @@ def render(seed):
     @bind(document["older_btn"], "click")
     def click_old(ev):
         document["body"].clear()
-        render(seed -1)
+        new_seed = (seed -1) % 1000
+        render(new_seed)
         document['in_box'].focus()
 
     def counting():
