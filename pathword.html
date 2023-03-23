@@ -11,203 +11,234 @@
     </script>
     <title>PathWord</title>
 </head>
-<body onload="brython()">
+<body onload="brython()" id="body">
 
 <script type="text/python">
 
 from browser import document, html, bind
-import random
+from browser.local_storage import storage
 
-document <= html.H2("PathWord")
-document <= html.BR()
+def render(seed):
+    import urllib.request as request
+    import json
+    import random
+    random.seed(seed)
 
-
-def stops(ij,kl):
-    i,j=ij
-    k,l=kl
-    if i == k:
-        s,t = min(j,l),max(j,l)
-        return {(i,x) for x in range(s,t+1,1)}
-    if j == l:
-        s,t = min(i,k),max(i,k)
-        return {(x,j) for x in range(s,t+1,1)}
-    if (i > k and j > l):
-        return {(i-x,j-x) for x in range(0,j-l+1,1)}
-    if (i > k and j < l):
-        return {(i-x,j+x) for x in range(0,i-k+1,1)}
-    if (i < k and j < l):
-        return {(k-x,l-x) for x in range(0,l-j+1,1)}
-    if (k > i and l < j):
-        return {(k-x,l+x) for x in range(0,k-i+1,1)}
-
-def argwhere(grid,val):
-    for i in range(len(grid)):
-        for j in range(len(grid[0])):
-            if grid[i][j] == val:
-                return i,j
-
-def isin(grid,val):
-    for i in range(len(grid)):
-        for j in range(len(grid[0])):
-            if grid[i][j] == val:
-                return True
-    return False
-
-idx = lambda i,j: '{}{}'.format(i,j)
-
-gs = 5
-wl = 5
-words = [w.strip() for w in open('wordle-answers-alphabetical.txt','r')]
-word = random.choice(words)
-abc = [x for x in "abcdefghijklmnopqrstuvwxyz"]
-grid = [list(range(gs)) for _ in range(gs)]
-pl = []
-for i in range(gs):
-    for j in range(gs):
-        pl.append((i,j))
-uwl = list({w for w in word})
-choices = random.sample(range(len(pl)),len(uwl))
-choices = {pl[i] for i in choices}
-for n,(i,j) in enumerate(choices):
-    grid[i][j] = uwl[n]
-rest = list(set(abc)-{x for x in word})
-rest = random.sample(rest,k=len(rest))
-a = 0
-for i in range(gs):
-    for j in range(gs):
-        if (i,j) not in choices:
-            grid[i][j] = rest[a]
-            a += 1
+    document <= html.H2("PathWord #{}".format(seed))
+    document <= html.BR()
 
 
-def step(next_letter):
-    global is_first
-    global grid
-    global current_letter
-    global guessed
-    global done
-    global steps
-    k,l = argwhere(grid,next_letter)
-    document[idx(k,l)].style.border =  "2.5px double Black"
-    if is_first:
-        is_first = False
-        current_letter = next_letter
-        document['in_text'].text = "choose next letter"
-        return
-    i,j = argwhere(grid,current_letter)
-    document[idx(i,j)].style.border =  "2.5px solid White"
-    current_letter = next_letter
-    guessed = guessed.union({grid[i][j] for (i,j) in stops((i,j),(k,l))})
-    for n,w in enumerate(word):
-        if w in guessed:
-            document["word_"+str(n)].style.backgroundColor = "LawnGreen"
-            document["word_"+str(n)].text = w
+    def stops(ij,kl):
+        i,j=ij
+        k,l=kl
+        if i == k:
+            s,t = min(j,l),max(j,l)
+            return {(i,x) for x in range(s,t+1,1)}
+        if j == l:
+            s,t = min(i,k),max(i,k)
+            return {(x,j) for x in range(s,t+1,1)}
+        if (i > k and j > l):
+            return {(i-x,j-x) for x in range(0,j-l+1,1)}
+        if (i > k and j < l):
+            return {(i-x,j+x) for x in range(0,i-k+1,1)}
+        if (i < k and j < l):
+            return {(k-x,l-x) for x in range(0,l-j+1,1)}
+        if (k > i and l < j):
+            return {(k-x,l+x) for x in range(0,k-i+1,1)}
+
+    def argwhere(grid,val):
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == val:
+                    return i,j
+
+    def isin(grid,val):
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == val:
+                    return True
+        return False
+
+    idx = lambda i,j: '{}{}'.format(i,j)
+
+    gs = 5
+    wl = 5
+    words = [w.strip() for w in open('wordle-answers-alphabetical.txt','r')]
+    word = random.choice(words)
+    abc = [x for x in "abcdefghijklmnopqrstuvwxyz"]
+    grid = [list(range(gs)) for _ in range(gs)]
+    pl = []
     for i in range(gs):
         for j in range(gs):
-            if grid[i][j] in guessed:
-                if grid[i][j] in word:
-                    document[idx(i,j)].style.backgroundColor = "LawnGreen"
-                    document[grid[i][j]].style.backgroundColor = "LawnGreen"
-                else:
-                    document[idx(i,j)].style.backgroundColor = "Red"
-                    document[grid[i][j]].style.backgroundColor = "Red"
-    steps += 1
-    done = "_" not in [document["word_"+str(n)].text for n in range(wl)]
-    if done:
-        document['input'].clear()
-        document['steps'].clear()
-        document['input'] <= html.H4("congrats! solved in {} steps".format(steps))
-    else:
-        document['steps'].text = "steps: {}".format(steps)
+            pl.append((i,j))
+    uwl = list({w for w in word})
+    choices = random.sample(range(len(pl)),len(uwl))
+    choices = {pl[i] for i in choices}
+    for n,(i,j) in enumerate(choices):
+        grid[i][j] = uwl[n]
+    rest = list(set(abc)-{x for x in word})
+    rest = random.sample(rest,k=len(rest))
+    a = 0
+    for i in range(gs):
+        for j in range(gs):
+            if (i,j) not in choices:
+                grid[i][j] = rest[a]
+                a += 1
 
-def good_path(c,n):
-    global grid
-    i,j = argwhere(grid,c)
-    k,l = argwhere(grid,n)
-    if not (i==k or j==l or abs(i-k)==abs(j-l)):
-        return False
-    if abs(i-k) > 3 or abs(j-l) > 3:
-        return False
-    return True
 
-def validate(next_letter):
-    global current_letter
-    global is_first
-    if ord(next_letter) not in range(97, 123):
-        raise ValueError()
-    if (not is_first) and (not good_path(current_letter,next_letter)):
-        raise ValueError()
+    def step(next_letter):
+        #global grid
+        #global current_letter
+        #global guessed
+        #global done
+        #global steps
+        k,l = argwhere(grid,next_letter)
+        document[idx(k,l)].style.border =  "2.5px double Black"
+        if bool(storage['is_first']):
+            storage['current_letter'] = next_letter
+            document['in_text'].text = "choose next letter"
+            storage['is_first'] = ""
+            return
+        i,j = argwhere(grid,storage['current_letter'])
+        document[idx(i,j)].style.border =  "2.5px solid White"
+        storage['current_letter'] = next_letter
+        guessed.update({grid[i][j] for (i,j) in stops((i,j),(k,l))})
+        for n,w in enumerate(word):
+            if w in guessed:
+                document["word_"+str(n)].style.backgroundColor = "LawnGreen"
+                document["word_"+str(n)].text = w
+        for i in range(gs):
+            for j in range(gs):
+                if grid[i][j] in guessed:
+                    if grid[i][j] in word:
+                        document[idx(i,j)].style.backgroundColor = "LawnGreen"
+                        document[grid[i][j]].style.backgroundColor = "LawnGreen"
+                    else:
+                        document[idx(i,j)].style.backgroundColor = "Red"
+                        document[grid[i][j]].style.backgroundColor = "Red"
+        steps = int(storage['steps'])
+        steps += 1
+        storage['steps'] = str(steps)
+        done = "_" not in [document["word_"+str(n)].text for n in range(wl)]
+        if done:
+            document['input'].clear()
+            document['steps'].clear()
+            document['input'] <= html.H4("congrats! solved in {} steps. average: {:.1f}".format(steps,counting()))
+        else:
+            document['steps'].text = "steps: {}".format(steps)
 
-done = False
-guessed = set()
-i= 1
-is_first = True
-current_letter = ""
+    def good_path(c,n):
+        #global grid
+        i,j = argwhere(grid,c)
+        k,l = argwhere(grid,n)
+        if not (i==k or j==l or abs(i-k)==abs(j-l)):
+            return False
+        if abs(i-k) > 3 or abs(j-l) > 3:
+            return False
+        return True
 
-document <= html.DIV(id="alphabet")
-for x in abc:
-    document['alphabet'] <= (html.SPAN(x,id=x,style="padding: 1px 2px 1px 2px") if isin(grid,x) else html.SPAN(x,style="background-color: Red; padding: 1px 2px 1px 2px",id=x))
+    def validate(next_letter):
+        #current_letter
+        #global is_first
+        if ord(next_letter) not in range(97, 123):
+            raise ValueError()
+        if (not bool(storage['is_first'])) and (not good_path(storage['current_letter'],next_letter)):
+            raise ValueError()
 
-for i in range(2):
+    done = False
+    guessed = set()
+    i= 1
+    storage['is_first'] = str(True)
+    storage['current_letter'] = ""
+
+    document <= html.DIV(id="alphabet")
+    for x in abc:
+        document['alphabet'] <= (html.SPAN(x,id=x,style="padding: 1px 2px 1px 2px") if isin(grid,x) else html.SPAN(x,style="background-color: Red; padding: 1px 2px 1px 2px",id=x))
+
+    for i in range(2):
+        document <= html.BR()
+
+    document <=  html.TABLE(id="grid")
+    for i,row in enumerate(grid):
+        document['grid'] <= html.TR(html.TD(x,style="padding: 3px 8px 3px 8px;border: 2.5px solid White; margin: 0.5px",id=str(i)+str(j)) for j,x in enumerate(row))
+
+    for i in range(1):
+        document <= html.BR()
+
+    document <= html.DIV(id="word")
+    for n,w in enumerate(word):
+        document['word'] <= html.SPAN("_",id="word_"+str(n),style="padding: 1px 2px 1px 2px;margin:0.5px")
+
+    for i in range(1):
+        document <= html.BR()
+
+    document <= html.DIV(id="input")
+    document['input'] <= html.SPAN("enter starting letter: ",id='in_text')
+    document['input'] <= html.INPUT(id="in_box",style="width:10px")
+    document['input'] <= html.BUTTON("enter",id="in_button")
+    document['in_box'].focus()
+    document <= html.DIV("", id='error', style="color:Red")
+    for i in range(1):
+        document <= html.BR()
+
+    storage['steps'] = "0"
+    document <= html.H4("steps: 0",id="steps")
+
+    @bind(document["in_button"], "click")
+    def click(ev):
+        document['error'].text = ""
+        v = document["in_box"].value.lower()
+        try:
+            document["in_box"].value=""
+            validate(v)
+            step(v)
+            document['in_box'].focus()
+        except Exception as e:
+            document['in_box'].value=""
+            document['error'].text = "Move up to 3 spaces orthogonally or diagonally. Enter a single letter."
+            document['in_box'].focus()
+
+    @bind(document["in_box"], "keyup")
+    def keyup(ev):
+        if ev.key == "Enter":
+            click(ev)
+            document['in_box'].focus()
+
+    for i in range(1):
+        document <= html.BR()
+    document <= html.H4("Goal: ",style="display:inline")
+    document <= html.SPAN("Deduce the word by making a path through the grid. For each letter in your path, you'll find out if it's in the word or not. One letter is already ruled out.")
+    document <= html.BR()
+    document <= html.BR()
+    document <= html.H4("Rules: ",style="display:inline")
+    document <= html.SPAN("Choose a letter to start from. Then choose a letter to move to. You can move up to 3 spaces orthogonally or diagonally, checking all the letters you pass over.")
+    document <= html.BR()
     document <= html.BR()
 
-document <=  html.TABLE(id="grid")
-for i,row in enumerate(grid):
-    document['grid'] <= html.TR(html.TD(x,style="padding: 3px 8px 3px 8px;border: 2.5px solid White; margin: 0.5px",id=str(i)+str(j)) for j,x in enumerate(row))
+    document <= html.BUTTON("< see older puzzles",id="older_btn")
 
-for i in range(1):
-    document <= html.BR()
-
-document <= html.DIV(id="word")
-for n,w in enumerate(word):
-    document['word'] <= html.SPAN("_",id="word_"+str(n),style="padding: 1px 2px 1px 2px;margin:0.5px")
-
-for i in range(1):
-    document <= html.BR()
-
-document <= html.DIV(id="input")
-document['input'] <= html.SPAN("enter starting letter: ",id='in_text')
-document['input'] <= html.INPUT(id="in_box",style="width:10px")
-document['input'] <= html.BUTTON("enter",id="in_button")
-document['in_box'].focus()
-document <= html.DIV("", id='error', style="color:Red")
-for i in range(1):
-    document <= html.BR()
-
-steps = 0
-document <= html.H4("steps: 0",id="steps")
-
-@bind(document["in_button"], "click")
-def click(ev):
-    document['error'].text = ""
-    v = document["in_box"].value.lower()
-    try:
-        document["in_box"].value=""
-        validate(v)
-        step(v)
+    @bind(document["older_btn"], "click")
+    def click_old(ev):
+        document["body"].clear()
+        render(seed -1)
         document['in_box'].focus()
-    except Exception:
-        document["in_box"].value=""
-        document['error'].text = "Move up to 3 spaces orthogonally or diagonally. Enter a single letter."
-        document['in_box'].focus()
 
-@bind(document["in_box"], "keyup")
-def keyup(ev):
-    if ev.key == "Enter":
-        click(ev)
-        document['in_box'].focus()
+    def counting():
+        hit_n = "https://api.countapi.xyz/hit/pathword/test_n_{}".format(seed)
+        n = json.loads(request.urlopen(hit_n).read())['value']
+        if n==1:
+            create_s = "https://api.countapi.xyz/create?namespace=pathword&key=test_s_{}&update_lowerbound=0&update_upperbound=10000&value={}".format(seed,storage['steps'])
+            request.urlopen(create_s)
+            s = int(storage['steps'])
+        else:
+            update_s = """https://api.countapi.xyz/update/pathword/test_s_{seed}?amount={steps}""".format(seed=seed,steps=storage['steps'])
+            s = json.loads(request.urlopen(update_s).read())['value']
+        return s/n
 
-for i in range(1):
-    document <= html.BR()
-document <= html.H4("Goal: ",style="display:inline")
-document <= html.SPAN("Deduce the word by reaching the correct letters in the grid. One letter is already ruled out.")
-document <= html.BR()
-document <= html.BR()
-document <= html.H4("Rules: ",style="display:inline")
-document <= html.SPAN("Choose a letter to start from. Then choose a letter to move to. You can move up to 3 spaces orthogonally or diagonally, checking all the letters you pass over.")
-document <= html.BR()
-document <= html.BR()
-document <= html.SPAN("Refresh this page to get a new puzzle")
+
+seed = 1
+render(seed)
+
 </script>
 </body>
 </html>
