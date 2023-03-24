@@ -24,10 +24,15 @@ def render(seed):
     import json
     import random
     random.seed(seed)
+    document <= html.DIV(style="clear:both", id='headline')
+    document['headline'] <= html.H2("PathWord #{}".format(seed),style='float:left')
+    delta = seed - 1
+    if delta < 60:
+        date = datetime.date(2023,3,23) + datetime.timedelta(delta)
+        document['headline'] <= html.H2(date.strftime("%m/%d/%y"),style="float:right")
+    document <= html.DIV(style="clear:both")
 
-    document <= html.H2("PathWord #{}".format(seed))
     document <= html.BR()
-
 
     def stops(ij,kl):
         i,j=ij
