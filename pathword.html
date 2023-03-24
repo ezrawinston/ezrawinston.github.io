@@ -17,6 +17,7 @@
 
 from browser import document, html, bind
 from browser.local_storage import storage
+import datetime
 
 def render(seed):
     import urllib.request as request
@@ -237,7 +238,7 @@ def render(seed):
         return s/n
 
 
-seed = 1
+seed = 1+ (datetime.date.today() - datetime.date(2023,3,23)).days
 render(seed)
 
 </script>
