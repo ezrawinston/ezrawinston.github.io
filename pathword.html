@@ -106,6 +106,15 @@ def render(seed):
             storage['is_first'] = ""
             return
         i,j = argwhere(grid,storage['current_letter'])
+        if i==k:
+            storage['path'] += "_"
+        elif l==j:
+            storage['path'] += "|"
+        elif  (i > k and j > l) or (i < k and j < l):
+            storage['path'] += "\\"
+        else:
+            storage['path'] += "/"
+
         document[idx(i,j)].style.border =  "2.5px solid White"
         storage['current_letter'] = next_letter
         guessed.update({grid[i][j] for (i,j) in stops((i,j),(k,l))})
@@ -130,6 +139,7 @@ def render(seed):
             document['input'].clear()
             document['steps'].clear()
             document['input'] <= html.H4("congrats! solved in {} steps. average: {:.1f}".format(steps,counting()))
+            #document['input'] <= html.H4(storage['path'])
         else:
             document['steps'].text = "steps: {}".format(steps)
 
@@ -180,14 +190,15 @@ def render(seed):
 
     document <= html.DIV(id="input")
     document['input'] <= html.SPAN("enter starting letter: ",id='in_text')
-    document['input'] <= html.INPUT(id="in_box",style="width:10px")
-    document['input'] <= html.BUTTON("enter",id="in_button")
+    document['input'] <= html.INPUT(id="in_box",style="width:10px;touch-action:manipulation")
+    document['input'] <= html.BUTTON("enter",id="in_button",style="touch-action:manipulation")
     document['in_box'].focus()
     document <= html.DIV("", id='error', style="color:Red")
     for i in range(1):
         document <= html.BR()
 
     storage['steps'] = "0"
+    storage['path'] = ""
     document <= html.H4("steps: 0",id="steps")
 
     @bind(document["in_button"], "click")
@@ -210,8 +221,16 @@ def render(seed):
             click(ev)
             document['in_box'].focus()
 
-    for i in range(1):
+
+    document <= html.BUTTON("< see older puzzles",id="older_btn",style="touch-action:manipulation")
+    for i in range(2):
         document <= html.BR()
+    @bind(document["older_btn"], "click")
+    def click_old(ev):
+        document["body"].clear()
+        new_seed = (seed -1) % 1000
+        render(new_seed)
+        document['in_box'].focus()
     document <= html.H4("Goal: ",style="display:inline")
     document <= html.SPAN("Deduce the word by making a path through the grid. For each letter in your path, you'll find out if it's in the word or not. One letter is already ruled out.")
     document <= html.BR()
@@ -221,14 +240,7 @@ def render(seed):
     document <= html.BR()
     document <= html.BR()
 
-    document <= html.BUTTON("< see older puzzles",id="older_btn")
 
-    @bind(document["older_btn"], "click")
-    def click_old(ev):
-        document["body"].clear()
-        new_seed = (seed -1) % 1000
-        render(new_seed)
-        document['in_box'].focus()
 
     def counting():
         hit_n = "https://api.countapi.xyz/hit/pathword/test_n_{}".format(seed)
