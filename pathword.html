@@ -190,7 +190,7 @@ def render(seed):
 
     document <= html.DIV(id="input")
     document['input'] <= html.SPAN("enter starting letter: ",id='in_text')
-    document['input'] <= html.INPUT(id="in_box",style="width:10px;touch-action:manipulation")
+    document['input'] <= html.INPUT(id="in_box",style="width:16px;touch-action:manipulation;font-size:16px")
     document['input'] <= html.BUTTON("enter",id="in_button",style="touch-action:manipulation")
     document['in_box'].focus()
     document <= html.DIV("", id='error', style="color:Red")
