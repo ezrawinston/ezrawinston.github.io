@@ -106,17 +106,17 @@ def render(seed):
                 document[idx(i,j)]["status"] = "normal"
             document[idx(k,l)]["status"] = "proposed"
             document['error'].clear()
-            document['error'] <= html.DIV("click again to confirm", id='error', style="color:Gray")
+            document['error'] <= html.DIV("click again to confirm", Class='msg',style="color:#353535;")
             storage['proposed_letter'] = next_letter
             return
         storage['proposed_letter'] = ""
         document['error'].clear()
-        document['error'] <= html.DIV("choose next letter", id='error', style="color:Green")
+        document['error'] <= html.DIV("choose next letter", Class='msg', style="color:Green")
         document[idx(k,l)]["status"] = "current"
         if bool(storage['is_first']):
             storage['current_letter'] = next_letter
             document['error'].clear()
-            document['error'] <= html.DIV("choose next letter", id='error', style="color:Green")
+            document['error'] <= html.DIV("choose next letter", Class='msg', style="color:Green")
             storage['is_first'] = ""
             return
         i,j = argwhere(grid,storage['current_letter'])
@@ -154,8 +154,7 @@ def render(seed):
             document['steps'] <= html.H4("congrats! solved in {} steps. average: {:.1f}".format(steps,counting()))
             #document['input'] <= html.H4(storage['path'])
             document['error'].clear()
-            document['error'] <= html.DIV(" ", id='error', style="color:Gray")
-            document['error'] <= html.BR()
+            document['error'] <= html.DIV("solved!", Class='msg', style="color:Green;")
             for i in range(gs):
                 for j in range(gs):
                     document[str(i)+str(j)].unbind("click",click)
@@ -194,11 +193,9 @@ def render(seed):
     for i in range(1):
         document <= html.BR()
 
-    document <= html.DIV("choose starting letter", id='error', style="color:Green;")
+    document <= html.DIV(id="error")
+    document['error']<=html.DIV("choose starting letter", Class='msg', style="color:Green;")
 
-
-    for i in range(1):
-        document <= html.BR()
 
     document <=  html.TABLE(id="grid")
     for i,row in enumerate(grid):
@@ -230,7 +227,7 @@ def render(seed):
             step(v)
         except Exception as e:
             document['error'].clear()
-            document['error'] <= html.DIV("Move up to 3 spaces orthogonally or diagonally.", id='error', style="color:Red")
+            document['error'] <= html.DIV("move up to 3 spaces up-down, left-right, or diagonal", Class='msg', style="color:Red;")
 
 
     for i in range(gs):
