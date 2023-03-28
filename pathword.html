@@ -111,7 +111,7 @@ def render(seed):
             return
         storage['proposed_letter'] = ""
         document['error'].clear()
-        document['error'] <= html.DIV("choose next letter", id='error', style="color:Black")
+        document['error'] <= html.DIV("choose next letter", id='error', style="color:Green")
         document[idx(k,l)]["status"] = "current"
         if bool(storage['is_first']):
             storage['current_letter'] = next_letter
@@ -150,10 +150,15 @@ def render(seed):
         storage['steps'] = str(steps)
         done = "_" not in [document["word_"+str(n)].text for n in range(wl)]
         if done:
-            document['input'].clear()
             document['steps'].clear()
-            document['input'] <= html.H4("congrats! solved in {} steps. average: {:.1f}".format(steps,counting()))
+            document['steps'] <= html.H4("congrats! solved in {} steps. average: {:.1f}".format(steps,counting()))
             #document['input'] <= html.H4(storage['path'])
+            document['error'].clear()
+            document['error'] <= html.DIV(" ", id='error', style="color:Gray")
+            document['error'] <= html.BR()
+            for i in range(gs):
+                for j in range(gs):
+                    document[str(i)+str(j)].unbind("click",click)
         else:
             document['steps'].text = "steps: {}".format(steps)
 
@@ -186,7 +191,13 @@ def render(seed):
     for x in abc:
         document['alphabet'] <= (html.SPAN(x,id=x,style="padding: 1px 2px 1px 2px") if isin(grid,x) else html.SPAN(x,style="background-color: Red; padding: 1px 2px 1px 2px",id=x))
 
-    for i in range(2):
+    for i in range(1):
+        document <= html.BR()
+
+    document <= html.DIV("choose starting letter", id='error', style="color:Green;")
+
+
+    for i in range(1):
         document <= html.BR()
 
     document <=  html.TABLE(id="grid")
@@ -195,6 +206,8 @@ def render(seed):
                 html.BUTTON(x,id=str(i)+str(j), Class="abc_button",status="normal")
             ) for j,x in enumerate(row))
 
+
+
     for i in range(1):
         document <= html.BR()
 
@@ -202,11 +215,6 @@ def render(seed):
     for n,w in enumerate(word):
         document['word'] <= html.SPAN("_",id="word_"+str(n),style="padding: 1px 2px 1px 2px;margin:0.5px")
 
-    for i in range(1):
-        document <= html.BR()
-
-    document <= html.DIV(id="input")
-    document <= html.DIV("choose starting letter", id='error', style="color:Green;")
     for i in range(1):
         document <= html.BR()
 
@@ -238,7 +246,7 @@ def render(seed):
         document["body"].clear()
         new_seed = (seed -1) % 1000
         render(new_seed)
-        document['in_box'].focus()
+
     document <= html.H4("Goal: ",style="display:inline")
     document <= html.SPAN("Deduce the word by making a path through the grid. For each letter in your path, you'll find out if it's in the word or not. One letter is already ruled out.")
     document <= html.BR()
