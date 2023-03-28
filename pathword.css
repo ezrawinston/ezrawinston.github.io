@@ -40,3 +40,7 @@ input {
 .abc_button[included="no"] {
     background-color: Red
 }
+
+#error {
+    white-space: nowrap;
+}
