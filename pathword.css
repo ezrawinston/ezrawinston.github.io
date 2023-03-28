@@ -1,11 +1,13 @@
 input {
-    -webkit-appearance: none;
+    -webkit-appearance: none !important;
     -moz-appearance: none;
     appearance: none;
     opacity: 1;
 }
 
 .abc_button {
+    -webkit-appearance: none !important;
+    color: Black;
     font-size: 22px;
     border-radius: 2px;
     border: 2.5px solid White;
