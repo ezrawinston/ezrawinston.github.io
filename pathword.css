@@ -1,0 +1,31 @@
+.abc_button {
+    font-size: 18px;
+    border-radius: 2px;
+    border: 2.5px solid White;
+    padding: 3px 8px 3px 8px;
+    margin: 0.5px;
+    height: 32px;
+    width: 32px;
+    text-align: center;
+}
+
+.abc_button[status="current"] {
+    border: 2.5px double Black;
+}
+
+.abc_button[status="proposed"] {
+    border: 2.5px dashed #dbd4d4;
+}
+
+.abc_button[status="normal"] {
+    border: 2.5px solid transparent;
+}
+
+
+.abc_button[included="yes"] {
+    background-color: LawnGreen
+}
+
+.abc_button[included="no"] {
+    background-color: Red
+}

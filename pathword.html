@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="pathword.css">
     <script type="text/javascript"
             src="https://cdn.jsdelivr.net/npm/brython@3.11.0/brython.min.js">
     </script>
@@ -99,10 +100,23 @@ def render(seed):
         #global done
         #global steps
         k,l = argwhere(grid,next_letter)
-        document[idx(k,l)].style.border =  "2.5px double Black"
+        if not document[idx(k,l)]["status"] == "proposed":
+            if storage['proposed_letter'] != "":
+                i,j = argwhere(grid,storage['proposed_letter'])
+                document[idx(i,j)]["status"] = "normal"
+            document[idx(k,l)]["status"] = "proposed"
+            document['error'].clear()
+            document['error'] <= html.DIV("click again to confirm", id='error', style="color:Gray")
+            storage['proposed_letter'] = next_letter
+            return
+        storage['proposed_letter'] = ""
+        document['error'].clear()
+        document['error'] <= html.DIV("choose next letter", id='error', style="color:Black")
+        document[idx(k,l)]["status"] = "current"
         if bool(storage['is_first']):
             storage['current_letter'] = next_letter
-            document['in_text'].text = "choose next letter"
+            document['error'].clear()
+            document['error'] <= html.DIV("choose next letter", id='error', style="color:Green")
             storage['is_first'] = ""
             return
         i,j = argwhere(grid,storage['current_letter'])
@@ -115,7 +129,7 @@ def render(seed):
         else:
             storage['path'] += "/"
 
-        document[idx(i,j)].style.border =  "2.5px solid White"
+        document[idx(i,j)]["status"] = "normal"
         storage['current_letter'] = next_letter
         guessed.update({grid[i][j] for (i,j) in stops((i,j),(k,l))})
         for n,w in enumerate(word):
@@ -126,10 +140,10 @@ def render(seed):
             for j in range(gs):
                 if grid[i][j] in guessed:
                     if grid[i][j] in word:
-                        document[idx(i,j)].style.backgroundColor = "LawnGreen"
+                        document[idx(i,j)]["included"] = "yes"
                         document[grid[i][j]].style.backgroundColor = "LawnGreen"
                     else:
-                        document[idx(i,j)].style.backgroundColor = "Red"
+                        document[idx(i,j)]["included"] = "no"
                         document[grid[i][j]].style.backgroundColor = "Red"
         steps = int(storage['steps'])
         steps += 1
@@ -166,6 +180,7 @@ def render(seed):
     i= 1
     storage['is_first'] = str(True)
     storage['current_letter'] = ""
+    storage['proposed_letter'] = ""
 
     document <= html.DIV(id="alphabet")
     for x in abc:
@@ -176,7 +191,9 @@ def render(seed):
 
     document <=  html.TABLE(id="grid")
     for i,row in enumerate(grid):
-        document['grid'] <= html.TR(html.TD(x,style="padding: 3px 8px 3px 8px;border: 2.5px solid White; margin: 0.5px",id=str(i)+str(j)) for j,x in enumerate(row))
+        document['grid'] <= html.TR(html.TD(
+                html.BUTTON(x,id=str(i)+str(j), Class="abc_button",status="normal")
+            ) for j,x in enumerate(row))
 
     for i in range(1):
         document <= html.BR()
@@ -189,11 +206,7 @@ def render(seed):
         document <= html.BR()
 
     document <= html.DIV(id="input")
-    document['input'] <= html.SPAN("enter starting letter: ",id='in_text')
-    document['input'] <= html.INPUT(id="in_box",style="width:16px;touch-action:manipulation;font-size:16px")
-    document['input'] <= html.BUTTON("enter",id="in_button",style="touch-action:manipulation")
-    document['in_box'].focus()
-    document <= html.DIV("", id='error', style="color:Red")
+    document <= html.DIV("choose starting letter", id='error', style="color:Green;")
     for i in range(1):
         document <= html.BR()
 
@@ -201,25 +214,20 @@ def render(seed):
     storage['path'] = ""
     document <= html.H4("steps: 0",id="steps")
 
-    @bind(document["in_button"], "click")
     def click(ev):
         document['error'].text = ""
-        v = document["in_box"].value.lower()
+        v = ev.currentTarget.text
         try:
-            document["in_box"].value=""
             validate(v)
             step(v)
-            document['in_box'].focus()
         except Exception as e:
-            document['in_box'].value=""
-            document['error'].text = "Move up to 3 spaces orthogonally or diagonally. Enter a single letter."
-            document['in_box'].focus()
+            document['error'].clear()
+            document['error'] <= html.DIV("Move up to 3 spaces orthogonally or diagonally.", id='error', style="color:Red")
 
-    @bind(document["in_box"], "keyup")
-    def keyup(ev):
-        if ev.key == "Enter":
-            click(ev)
-            document['in_box'].focus()
+
+    for i in range(gs):
+        for j in range(gs):
+            document[str(i)+str(j)].bind("click",click)
 
 
     document <= html.BUTTON("< see older puzzles",id="older_btn",style="touch-action:manipulation")
