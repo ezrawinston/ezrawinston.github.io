@@ -228,6 +228,10 @@ def render(seed):
         except Exception as e:
             document['error'].clear()
             document['error'] <= html.DIV("move up to 3 spaces up-down, left-right, or diagonal", Class='msg', style="color:Red;")
+            if storage['proposed_letter'] != "":
+                i,j = argwhere(grid,storage['proposed_letter'])
+                document[idx(i,j)]["status"] = "normal"
+                storage['proposed_letter'] = ""
 
 
     for i in range(gs):
