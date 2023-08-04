@@ -13,8 +13,13 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    min-height: -webkiti-fill-available;
     padding: 20px;
     color: #333;
+}
+
+html {
+    min-height: -webkiti-fill-available;
 }
 
 .container {
