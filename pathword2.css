@@ -12,15 +12,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    min-height: -webkiti-fill-available;
+    min-height: 75vh;
     padding: 20px;
     color: #333;
 }
 
-html {
-    min-height: -webkiti-fill-available;
-}
 
 .container {
     background-color: #ffffff;
