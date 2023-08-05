@@ -57,7 +57,7 @@ body {
 }
 
 .alphabet span {
-    margin: 2px;
+    margin: 3px;
     font-weight: 300;
     /*transition: color 0.3s;*/
     font-size: max(20px, min(calc(2.857vw + 10.57px),26px));
@@ -68,7 +68,8 @@ body {
 }
 
 .alphabet span.excluded {
-    color: #E67A7A;
+    /*color: #E67A7A;*/
+    color: #cccccc;
 }
 
 /*.grid {*/
@@ -315,13 +316,16 @@ body {
 
 .grid button.highlighted-red {
     color: #FFFFFF;
-    background-color: #E67A7A;
-    /* background-color: #e57373;*/
+    /*background-color: #E67A7A;*/
+    background-color: #d2d2d2;
+    border-width: 0px;
 }
 
 .grid button.highlighted-red:hover {
     color: #FFFFFF;
-    background-color: #cc615e;
+
+    /*background-color: #cc615e;*/
+    background-color: #c8c8c8;
 }
 
 .answer-letter.correct {
