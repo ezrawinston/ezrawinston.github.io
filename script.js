@@ -4,6 +4,7 @@ let currentPos = null;
 let path = [];
 let steps = 0;
 let rng = dateToRNG()
+let pathIcons = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.querySelector('.grid');
@@ -82,11 +83,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     // const previousPuzzle = document.getElementById('previous-puzzle');
     // const nextPuzzle = document.getElementById('next-puzzle');
     const puzzleDate = document.querySelector('.puzzle-date');
-    const puzzleNumber = document.querySelector('.puzzle-number');
+    const puzzleNumber = document.querySelectorAll('.puzzle-number');
 
     let currentDate = new Date();
     let currentPuzzleNumber = 1;
-    puzzleNumber.textContent = `puzzle #${currentPuzzleNumber}`;
+
+    puzzleNumber.forEach(pn => {pn.textContent = currentPuzzleNumber});
     puzzleDate.textContent = formatDate(currentDate);
     // previousPuzzle.addEventListener('click', () => {
     //     // Decrement date and puzzle number
@@ -177,6 +179,7 @@ async function getSecretWord() {
 
 
 function handleMove(newPos,secretWord) {
+    numNew = 0
     if (currentPos === null) {
         // If it's the first turn, just set currentPos to newPos and add newPos to the path
         currentPos = newPos;
@@ -189,6 +192,7 @@ function handleMove(newPos,secretWord) {
         curButton.classList.remove('current');
         // If it's not the first turn, calculate the path from currentPos to newPos
         const newPath = calculatePath(currentPos, newPos);
+        numNew = newPath.length
         path = path.concat(newPath);
         currentPos = newPos;
         steps += 1
@@ -205,7 +209,7 @@ function handleMove(newPos,secretWord) {
         }, 1500);
         return;// Handle invalid move
     }
-    updateUI(secretWord);
+    updateUI(secretWord, numNew);
     checkWin(secretWord);
 }
 
@@ -216,10 +220,11 @@ function checkWin(secretWord) {
     if (revealedLetters === secretWord) {
         const winOverlay = document.getElementById('win-overlay');
         winOverlay.style.display = 'flex';
+        document.querySelector('.pathIcons').textContent = pathIcons.join(' ')
     }
 }
 
-function updateUI(secretWord) {
+function updateUI(secretWord,numNew) {
     // Clear old highlights
     // document.querySelectorAll('.grid button').forEach(button => {
     //     button.classList.remove('highlighted-green');
@@ -229,11 +234,15 @@ function updateUI(secretWord) {
     // Highlight path
     const curButton = document.querySelector(`.grid button:nth-child(${currentPos[0] * 5 + currentPos[1] + 1})`)
     curButton.classList.add('current');
-    path.forEach(pos => {
+    numOld = path.length - numNew
+    path.forEach((pos,idx) => {
         const button = document.querySelector(`.grid button:nth-child(${pos[0] * 5 + pos[1] + 1})`);
         const letter = button.textContent;
         const alpha = document.getElementById(letter);
         if (secretWord.includes(letter)) {
+            if (idx>= numOld || numOld===1) {
+                pathIcons.push("🟩")
+            }
             button.classList.add('highlighted-green');
             alpha.classList.add('included');
             // Reveal letter in word
@@ -243,13 +252,15 @@ function updateUI(secretWord) {
             //     answerLetterDiv.classList.add('correct');
             // }
         } else {
+            if (idx>= numOld || numOld===1) {
+                pathIcons.push("⬜")
+            }
             button.classList.add('highlighted-red');
             alpha.classList.add('excluded')
         }
         updateAnswer(letter, secretWord)
     });
 }
-
 
 function calculatePath(startPos, endPos) {
     const path = [];
@@ -259,7 +270,8 @@ function calculatePath(startPos, endPos) {
     const ny = Math.abs(dy);
     const signX = dx > 0 ? 1 : -1;
     const signY = dy > 0 ? 1 : -1;
-
+    const arrow = dx > 0 ? (dy > 0 ? "↘️" : (dy < 0 ? "↗️" : "➡️")) : (dx < 0 ? (dy > 0 ? "↙️" : (dy < 0 ? "↖️" : "⬅️")) : (dy > 0 ? "⬇️" : "⬆️"))
+    pathIcons.push(arrow)
     let px = startPos[1];
     let py = startPos[0];
 
@@ -294,6 +306,25 @@ function isValidMove(pos1, pos2) {
     return (( rowDiff > 0 || colDiff > 0) && (rowDiff === colDiff || rowDiff === 0 || colDiff === 0) && Math.max(rowDiff, colDiff) <= 3);
 }
 
+function shuffle(array, rng) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(rng() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
 function generateGridLetters(secretWord) {
     let gridSize = 5;
     let alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -301,7 +332,7 @@ function generateGridLetters(secretWord) {
 
     // Convert the alphabet into an array and shuffle it
     alphabet = alphabet.split('');
-    alphabet.sort(() => rng() - 0.5);
+    alphabet = shuffle(alphabet, rng);
 
     // Remove the first letter that's not in the secret word
     for (let i = 0; i < alphabet.length; i++) {

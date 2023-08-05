@@ -48,7 +48,7 @@
     <div class="navigation">
 <!--        <button class="nav-button" id="previous-puzzle">〈 older</button>-->
         <div class="info">
-            <div class="puzzle-number">puzzle #</div>
+            <div>puzzle #<span class="puzzle-number"></span></div>
             <div class="puzzle-date">Date</div>
         </div>
 <!--        <button class="nav-button" id="next-puzzle">newer 〉</button>-->
@@ -67,8 +67,12 @@
 </div>
 <div class="win-overlay" id="win-overlay">
     <div class="win-container">
-        <h2>Solved!</h2>
-        <p>You solved the puzzle in <span class="step-count"></span> steps.</p>
+        <h2>solved!</h2>
+<!--        <h2>pathword #<span class="puzzle-number"></span></h2>-->
+        <p class="win1">pathword #<span class="puzzle-number"></span> in <span class="step-count"></span> steps:</p>
+        <p class="win2"><span class="pathIcons"></span></p>
+        <p>check back for a new puzzle daily!</p>
+        <p>try a random puzzle from the archive now!</p>
 <!--        <button class="close-instructions" id="close-instructions">Let's play!</button>-->
     </div>
 </div>

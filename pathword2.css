@@ -235,7 +235,8 @@ body {
 
 .instructions-container h2 {
     margin-bottom: 10px;
-    text-align: center;
+    text-align:left;
+    color: #666;
     font-weight: 400;
 }
 
@@ -281,17 +282,19 @@ body {
     width: 100%;
     max-width: 400px;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     flex: 1;
     flex-direction: column;
-    align-items: center;
+    color: #444;
 }
 
 
 .win-container h2 {
-    margin-bottom: 10px;
-    text-align: center;
+    margin-bottom: 15px;
+    text-align:left;
+    color: #444;
     font-weight: 400;
+    font-size: 28px;
 }
 
 .win-container h3 {
@@ -300,10 +303,17 @@ body {
     font-weight: 400;
 }
 
-.win-container p {
-    margin-bottom: 20px;
+.win1 {
+    margin-bottom: 5px;
+    width: 220px;
+    font-size: 18px;
 }
 
+.win2 {
+    margin-bottom: 5px;
+    width: 200px;
+    font-size: 18px;
+}
 
 .error-overlay {
     background-color: rgba(0, 0, 0, 0.5);
@@ -365,7 +375,7 @@ body {
 /*.answer-letter {*/
 .answer-letter {
     /*display: table-cell;*/
-    color: black;
+    color: #666;
     vertical-align: middle;
     width: 27px;
     height: 27px;
@@ -399,7 +409,7 @@ body {
     color: #FFFFFF;
 
     /*background-color: #cc615e;*/
-    background-color: #c8c8c8;
+    background-color: #af9e9e;
 }
 
 .answer-letter.correct {
@@ -426,10 +436,9 @@ body {
 }
 
 .rules-btn {
-    background-color: white; /* White background */
-    /*border: 2px solid #555555; !* Black border *!*/
+    /*background-color: white; !* White background *!*/
     border: 1px solid #666;
-    color: #666; /* Black text */
+    color: #666;
     text-align: center; /* Center the text */
     font-size: 20px; /* Size of the text */
     border-radius: 50%; /* Make it circular */
@@ -438,4 +447,21 @@ body {
     line-height: 30px;
     margin-top: -19px;
     margin-right: -19px;
+    background-color: transparent;
+    /*border: none;*/
+    transition: box-shadow 0.5s ease-in-out;
+    box-shadow: 0px 0px 5px 5px rgba(128, 128, 128, 0.5); /* Adjust color and size as needed */
+    animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0px 0px 5px 5px rgba(128, 128, 128, 0.5);
+    }
+    50% {
+        box-shadow: 0px 0px 10px 10px rgba(128, 128, 128, 0);
+    }
+    100% {
+        box-shadow: 0px 0px 5px 5px rgba(128, 128, 128, 0.5);
+    }
 }
