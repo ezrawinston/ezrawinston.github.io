@@ -29,7 +29,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 500px;
+    max-width: 360px;
     text-align: center;
     transition: transform 0.3s;
     min-width: 330px;
@@ -41,8 +41,8 @@ body {
 }
 
 .title {
-    margin-bottom: 40px;
-    font-size: 50px;
+    margin-bottom: 46px;
+    font-size: 40px;
     font-weight: 300;
     margin-left: -35px;
     margin-top: -30px;
@@ -94,23 +94,31 @@ body {
 
 .info {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex: 1;
-    justify-content: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: -15px;
+    margin-left: -5px;
+    margin-right: -5px;
+    color: #777;
 }
 
 .alphabet {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .alphabet span {
     margin: 1px;
     font-weight: 300;
     /*transition: color 0.3s;*/
-    font-size: max(20px, min(calc(2.857vw + 10.57px),26px));
+    /*font-size: max(20px, min(calc(2.857vw + 10.57px),26px));*/
+    font-size: 20px;
     vertical-align: middle;
     /*width: 25px;*/
     /*height: 25px;*/
@@ -145,9 +153,11 @@ body {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     /*gap: calc(0.037*max(94% - 20px,270px));*/
-    gap:  max(10px, min(calc(4.762vw + 10px - 476.2px), 30px));
-    width: calc(94% - 20px); /* 90% of container width minus 20px for left and right margin */
-    min-width: 270px; /* Minimum width of 270px */
+    /*gap:  max(10px, min(calc(4.762vw + 10px - 476.2px), 30px));*/
+    gap: 11px;
+    /*width: calc(94% - 20px); !* 90% of container width minus 20px for left and right margin *!*/
+    /*min-width: 270px; !* Minimum width of 270px *!*/
+    width: 270px;
     margin: 20px auto;
 }
 
@@ -162,7 +172,7 @@ body {
     outline: 1px solid transparent;
     outline-offset: -1px;
     color: #444444;
-    font-size: 30px;
+    font-size: 27px;
 }
 
 .grid button:hover {
@@ -194,7 +204,7 @@ body {
 }
 
 .steps {
-    font-weight: 300;
+    font-size: 20px;
 }
 
 .instructions-overlay {
@@ -347,7 +357,9 @@ body {
 .answer {
     display: flex;
     justify-content: center;
-    gap: 5px;
+    gap: 4px;
+    margin-top: 26px;
+    margin-bottom: 10px;
 }
 
 /*.answer-letter {*/
@@ -355,12 +367,13 @@ body {
     /*display: table-cell;*/
     color: black;
     vertical-align: middle;
-    width: 25px;
-    height: 25px;
+    width: 27px;
+    height: 27px;
+    line-height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: max(20px, min(calc(2.857vw + 10.57px),26px));
+    font-size: 26px;
 }
 
 
@@ -415,14 +428,14 @@ body {
 .rules-btn {
     background-color: white; /* White background */
     /*border: 2px solid #555555; !* Black border *!*/
-    border: 1px solid #777;
-    color: #777; /* Black text */
+    border: 1px solid #666;
+    color: #666; /* Black text */
     text-align: center; /* Center the text */
-    font-size: 23px; /* Size of the text */
+    font-size: 20px; /* Size of the text */
     border-radius: 50%; /* Make it circular */
-    width: 40px; /* Width of the button */
-    height: 40px; /* Height of the button */
-    line-height: 36px;
-    margin-top: -14px;
-    margin-right: -14px;
+    width: 34px; /* Width of the button */
+    height: 34px; /* Height of the button */
+    line-height: 30px;
+    margin-top: -19px;
+    margin-right: -19px;
 }

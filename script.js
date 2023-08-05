@@ -3,6 +3,7 @@
 let currentPos = null;
 let path = [];
 let steps = 0;
+let rng = dateToRNG()
 
 document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.querySelector('.grid');
@@ -78,63 +79,72 @@ document.addEventListener('DOMContentLoaded', async () => {
         instructionsOverlay.style.display = 'none';
     });
 
-    const previousPuzzle = document.getElementById('previous-puzzle');
-    const nextPuzzle = document.getElementById('next-puzzle');
+    // const previousPuzzle = document.getElementById('previous-puzzle');
+    // const nextPuzzle = document.getElementById('next-puzzle');
     const puzzleDate = document.querySelector('.puzzle-date');
     const puzzleNumber = document.querySelector('.puzzle-number');
 
     let currentDate = new Date();
     let currentPuzzleNumber = 1;
-
-    previousPuzzle.addEventListener('click', () => {
-        // Decrement date and puzzle number
-        currentDate.setDate(currentDate.getDate() - 1);
-        currentPuzzleNumber--;
-
-        // Update date and puzzle number
-        puzzleDate.textContent = currentDate.toISOString().split('T')[0];
-        puzzleNumber.textContent = `Puzzle #${currentPuzzleNumber}`;
-
-        // Add your custom JS logic to determine if the button click is correct or incorrect
-        const isCorrect = true; // Replace with your custom logic
-
-        previousPuzzle.classList.add('clicked');
-        if (isCorrect) {
-            previousPuzzle.classList.add('correct');
-            previousPuzzle.classList.remove('incorrect');
-        } else {
-            previousPuzzle.classList.add('incorrect');
-            previousPuzzle.classList.remove('correct');
-        }
-    });
-
-    nextPuzzle.addEventListener('click', () => {
-        // Increment date and puzzle number
-        currentDate.setDate(currentDate.getDate() + 1);
-        currentPuzzleNumber++;
-
-        // Update date and puzzle number
-        puzzleDate.textContent = currentDate.toISOString().split('T')[0];
-        puzzleNumber.textContent = `Puzzle #${currentPuzzleNumber}`;
-
-        // Add your custom JS logic to determine if the button click is correct or incorrect
-        const isCorrect = false; // Replace with your custom logic
-
-        nextPuzzle.classList.add('clicked');
-        if (isCorrect) {
-            nextPuzzle.classList.add('correct');
-            nextPuzzle.classList.remove('incorrect');
-        } else {
-            nextPuzzle.classList.add('incorrect');
-            nextPuzzle.classList.remove('correct');
-        }
-    });
+    puzzleNumber.textContent = `puzzle #${currentPuzzleNumber}`;
+    puzzleDate.textContent = formatDate(currentDate);
+    // previousPuzzle.addEventListener('click', () => {
+    //     // Decrement date and puzzle number
+    //     currentDate.setDate(currentDate.getDate() - 1);
+    //     currentPuzzleNumber--;
+    //
+    //     // Update date and puzzle number
+    //     puzzleDate.textContent = currentDate.toISOString().split('T')[0];
+    //     puzzleNumber.textContent = `Puzzle #${currentPuzzleNumber}`;
+    //
+    //     // Add your custom JS logic to determine if the button click is correct or incorrect
+    //     const isCorrect = true; // Replace with your custom logic
+    //
+    //     previousPuzzle.classList.add('clicked');
+    //     if (isCorrect) {
+    //         previousPuzzle.classList.add('correct');
+    //         previousPuzzle.classList.remove('incorrect');
+    //     } else {
+    //         previousPuzzle.classList.add('incorrect');
+    //         previousPuzzle.classList.remove('correct');
+    //     }
+    // });
+    //
+    // nextPuzzle.addEventListener('click', () => {
+    //     // Increment date and puzzle number
+    //     currentDate.setDate(currentDate.getDate() + 1);
+    //     currentPuzzleNumber++;
+    //
+    //     // Update date and puzzle number
+    //     puzzleDate.textContent = currentDate.toISOString().split('T')[0];
+    //     puzzleNumber.textContent = `Puzzle #${currentPuzzleNumber}`;
+    //
+    //     // Add your custom JS logic to determine if the button click is correct or incorrect
+    //     const isCorrect = false; // Replace with your custom logic
+    //
+    //     nextPuzzle.classList.add('clicked');
+    //     if (isCorrect) {
+    //         nextPuzzle.classList.add('correct');
+    //         nextPuzzle.classList.remove('incorrect');
+    //     } else {
+    //         nextPuzzle.classList.add('incorrect');
+    //         nextPuzzle.classList.remove('correct');
+    //     }
+    // });
 
     createGrid();
     showInstructions();
 
 
 });
+
+function formatDate(date) {
+    var day = String(date.getDate()).padStart(2, '0');
+    var month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
+    var year = String(date.getFullYear()).slice(-2);
+
+    return month + '/' + day + '/' + year;
+}
 
 function updateAnswer(letter, secretWord) {
     const answerLetters = document.querySelectorAll('.answer-letter');
@@ -151,7 +161,7 @@ async function getSecretWord() {
     const response = await fetch('wordle-answers-alphabetical.txt');
     const data = await response.text();
     const words = data.split('\n');
-    const index = Math.floor(Math.random() * words.length);
+    const index = Math.floor(rng() * words.length);
     return words[index].toUpperCase();
 }
 
@@ -291,7 +301,7 @@ function generateGridLetters(secretWord) {
 
     // Convert the alphabet into an array and shuffle it
     alphabet = alphabet.split('');
-    alphabet.sort(() => Math.random() - 0.5);
+    alphabet.sort(() => rng() - 0.5);
 
     // Remove the first letter that's not in the secret word
     for (let i = 0; i < alphabet.length; i++) {
@@ -311,3 +321,27 @@ function generateGridLetters(secretWord) {
     }
     return grid;
 }
+
+function dateToRNG() {
+  var m = 0x80000000;
+  var a = 1103515245;
+  var c = 12345;
+
+  // Get the current date in the user's locale and timezone
+  var now = new Date();
+  var localDate = now.toLocaleDateString();
+
+  // Convert the date string to a number
+  var seed = Number(localDate.replace(/\D/g, ''));
+
+  // Use the local date as the seed
+  var rand = function() {
+    seed = (a * seed + c) % m;
+    return seed / m;
+  };
+
+  return rand;
+}
+
+
+
