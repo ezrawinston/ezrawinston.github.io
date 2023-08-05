@@ -17,6 +17,11 @@ body {
     color: #333;
 }
 
+.header {
+    display: flex; /* Use flex layout */
+    justify-content: space-between; /* Align items to the left and right */
+}
+
 
 .container {
     background-color: #ffffff;
@@ -28,6 +33,7 @@ body {
     text-align: center;
     transition: transform 0.3s;
     min-width: 330px;
+    overflow: hidden;
 }
 
 .container:hover {
@@ -35,12 +41,56 @@ body {
 }
 
 .title {
-    margin-bottom: 20px;
-    font-size: max(32px, min(calc(5.882vw + 13.087px),42px));
-    font-weight: 500;
-    letter-spacing: .03em;
-    color: #444444;
+    margin-bottom: 40px;
+    font-size: 50px;
+    font-weight: 300;
+    margin-left: -35px;
+    margin-top: -30px;
+    /*vertical-align: middle;*/
+    display: flex;
+    padding-left: 2px;
+    padding-right: 2px;
+    text-align: left;
+    /*justify-content: center;*/
+    /*align-items: center;*/
 }
+
+/*.title span{*/
+/*    padding-left: 2px;*/
+/*    padding-right: 2px;*/
+/*}*/
+
+.title-P {
+    color: #FFFFFF;
+    background-color: #59b358;
+    margin-right: 3px;
+    padding-left: 15px;
+    padding-right: 3px;
+    padding-top: 5px;
+}
+.title-A {
+    color: #FFFFFF;
+    background-color: #cec2c2;
+    margin-right: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 5px;
+}
+
+.title-W {
+    margin-right: 1px;
+    padding-top: 5px;
+    color: #555555;
+}
+
+/*.title-W {*/
+/*    color: #FFFFFF;*/
+/*    background-color: #cec2c2;*/
+/*    margin-left: 1px;*/
+/*    margin-right: 1px;*/
+/*    padding-left: 3px;*/
+/*    padding-right: 3px;*/
+/*}*/
 
 .info {
     display: flex;
@@ -57,19 +107,29 @@ body {
 }
 
 .alphabet span {
-    margin: 3px;
+    margin: 1px;
     font-weight: 300;
     /*transition: color 0.3s;*/
     font-size: max(20px, min(calc(2.857vw + 10.57px),26px));
+    vertical-align: middle;
+    /*width: 25px;*/
+    /*height: 25px;*/
+    display: flex;
+    padding-left: 2px;
+    padding-right: 2px;
+    justify-content: center;
+    align-items: center;
 }
 
 .alphabet span.included {
-    color: #59b358;
+    color: #FFFFFF;
+    background-color: #59b358;
 }
 
 .alphabet span.excluded {
     /*color: #E67A7A;*/
-    color: #cccccc;
+    color: #FFFFFF;
+    background-color: #cec2c2;
 }
 
 /*.grid {*/
@@ -102,6 +162,7 @@ body {
     outline: 1px solid transparent;
     outline-offset: -1px;
     color: #444444;
+    font-size: 30px;
 }
 
 .grid button:hover {
@@ -317,7 +378,7 @@ body {
 .grid button.highlighted-red {
     color: #FFFFFF;
     /*background-color: #E67A7A;*/
-    background-color: #d2d2d2;
+    background-color: #cec2c2;
     border-width: 0px;
 }
 
@@ -336,11 +397,11 @@ body {
 
 /*F7CFBB*/
 
-.grid button {
-    font-size: max(24px, min(calc(3.5715vw - 333.15px), 31.5px));
-    /* Assuming you want to keep some padding, but adjust or remove as needed */
-    /*padding: 10px;*/
-}
+/*.grid button {*/
+/*    font-size: max(24px, min(calc(3.5715vw - 333.15px), 31.5px));*/
+/*    !* Assuming you want to keep some padding, but adjust or remove as needed *!*/
+/*    !*padding: 10px;*!*/
+/*}*/
 
 .grid button span {
     /* Centering */
@@ -349,4 +410,19 @@ body {
     justify-content: center;
     height: 100%;
     width: 100%;
+}
+
+.rules-btn {
+    background-color: white; /* White background */
+    /*border: 2px solid #555555; !* Black border *!*/
+    border: 1px solid #777;
+    color: #777; /* Black text */
+    text-align: center; /* Center the text */
+    font-size: 23px; /* Size of the text */
+    border-radius: 50%; /* Make it circular */
+    width: 40px; /* Width of the button */
+    height: 40px; /* Height of the button */
+    line-height: 36px;
+    margin-top: -14px;
+    margin-right: -14px;
 }

@@ -236,7 +236,6 @@ blurt
 blush
 board
 boast
-bobby
 boney
 bongo
 bonus
@@ -708,7 +707,6 @@ fault
 fauna
 favor
 feast
-fecal
 feign
 fella
 felon
@@ -989,7 +987,6 @@ homer
 honey
 honor
 horde
-horny
 horse
 hotel
 hotly
@@ -2170,7 +2167,6 @@ unzip
 upper
 upset
 urban
-urine
 usage
 usher
 using
@@ -2241,8 +2237,6 @@ weedy
 weigh
 weird
 welch
-welsh
-wench
 whack
 whale
 wharf
@@ -2266,8 +2260,6 @@ wider
 widow
 width
 wield
-wight
-willy
 wimpy
 wince
 winch
