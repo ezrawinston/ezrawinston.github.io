@@ -1,17 +1,29 @@
-// script.js
+//Copyright 2023 Ezra Winston. All rights reserved.
 
 let currentPos = null;
 let path = [];
 let steps = 0;
-let rng = dateToRNG()
 let pathIcons = [];
-
+let rng = null;
 document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.querySelector('.grid');
     const alphabetContainer = document.querySelector('.alphabet');
     const closeInstructions = document.getElementById('close-instructions');
     const instructionsOverlay = document.getElementById('instructions-overlay');
 
+    const puzzleDate = document.querySelector('.puzzle-date');
+    const puzzleNumber = document.querySelectorAll('.puzzle-number');
+
+    const startDate = new Date(2023, 6, 1);  // Month is 0-indexed, so 6 represents July
+    const currentDate = new Date();
+    const oneDay = 24 * 60 * 60 * 1000;  // Number of milliseconds in a day
+    const daysDifference = Math.floor((currentDate - startDate) / oneDay);
+    const currentPuzzleNumber = daysDifference + 1;
+
+    puzzleNumber.forEach(pn => {pn.textContent = currentPuzzleNumber});
+    puzzleDate.textContent = formatDate(currentDate);
+
+    rng = seedRNG(currentPuzzleNumber);
 
     function createAlphabet() {
         const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -68,13 +80,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 }
 
-
-    function showInstructions() {
+    const rulesBtn = document.querySelector('.rules-btn');
+    if (!localStorage.getItem('visited')) {
+            rulesBtn.classList.add('glow-btn');
+    }
+    rulesBtn.addEventListener('click', () => {
+        instructionsOverlay.style.display = 'flex';
+        rulesBtn.classList.remove('glow-btn')
         if (!localStorage.getItem('visited')) {
-            instructionsOverlay.style.display = 'flex';
             localStorage.setItem('visited', true);
         }
-    }
+    });
+
 
     closeInstructions.addEventListener('click', () => {
         instructionsOverlay.style.display = 'none';
@@ -82,14 +99,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // const previousPuzzle = document.getElementById('previous-puzzle');
     // const nextPuzzle = document.getElementById('next-puzzle');
-    const puzzleDate = document.querySelector('.puzzle-date');
-    const puzzleNumber = document.querySelectorAll('.puzzle-number');
 
-    let currentDate = new Date();
-    let currentPuzzleNumber = 1;
-
-    puzzleNumber.forEach(pn => {pn.textContent = currentPuzzleNumber});
-    puzzleDate.textContent = formatDate(currentDate);
     // previousPuzzle.addEventListener('click', () => {
     //     // Decrement date and puzzle number
     //     currentDate.setDate(currentDate.getDate() - 1);
@@ -214,13 +224,32 @@ function handleMove(newPos,secretWord) {
 }
 
 
+function splitIntoChunks(array, chunkSize) {
+    let chunks = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+        chunks.push(array.slice(i, i + chunkSize));
+    }
+    return chunks;
+}
 
 function checkWin(secretWord) {
     const revealedLetters = Array.from(document.querySelectorAll('.answer-letter')).map(div => div.textContent).join('');
     if (revealedLetters === secretWord) {
         const winOverlay = document.getElementById('win-overlay');
         winOverlay.style.display = 'flex';
-        document.querySelector('.pathIcons').textContent = pathIcons.join(' ')
+        arrows = pathIcons.map(step => step[0])
+        rows = splitIntoChunks(arrows, 7).map(row => row.join(' '))
+        document.querySelector('.pathIcons').innerHTML = rows.join('<br/>')
+        if (!localStorage.getItem('visited')) {
+            localStorage.setItem('visited', true);
+        }
+        document.querySelector('.rules-btn').classList.remove('glow-btn')
+        // pathIcons[0][0] = "▶️"
+        // pathIconsContainer = document.querySelector('.pathIcons')
+        // pathIcons.forEach(step => {
+        //     stepDiv = document.createElement('span');
+        //     stepDiv.textContent = step[0];//step.join(" ");
+        //     pathIconsContainer.appendChild(stepDiv);});
     }
 }
 
@@ -241,7 +270,7 @@ function updateUI(secretWord,numNew) {
         const alpha = document.getElementById(letter);
         if (secretWord.includes(letter)) {
             if (idx>= numOld || numOld===1) {
-                pathIcons.push("🟩")
+                pathIcons[pathIcons.length -1].push("🟩")
             }
             button.classList.add('highlighted-green');
             alpha.classList.add('included');
@@ -253,7 +282,7 @@ function updateUI(secretWord,numNew) {
             // }
         } else {
             if (idx>= numOld || numOld===1) {
-                pathIcons.push("⬜")
+                pathIcons[pathIcons.length -1].push("⬜")
             }
             button.classList.add('highlighted-red');
             alpha.classList.add('excluded')
@@ -271,7 +300,7 @@ function calculatePath(startPos, endPos) {
     const signX = dx > 0 ? 1 : -1;
     const signY = dy > 0 ? 1 : -1;
     const arrow = dx > 0 ? (dy > 0 ? "↘️" : (dy < 0 ? "↗️" : "➡️")) : (dx < 0 ? (dy > 0 ? "↙️" : (dy < 0 ? "↖️" : "⬅️")) : (dy > 0 ? "⬇️" : "⬆️"))
-    pathIcons.push(arrow)
+    pathIcons.push([arrow])
     let px = startPos[1];
     let py = startPos[0];
 
@@ -353,22 +382,17 @@ function generateGridLetters(secretWord) {
     return grid;
 }
 
-function dateToRNG() {
+function seedRNG(seed) {
   var m = 0x80000000;
   var a = 1103515245;
   var c = 12345;
 
-  // Get the current date in the user's locale and timezone
-  var now = new Date();
-  var localDate = now.toLocaleDateString();
-
-  // Convert the date string to a number
-  var seed = Number(localDate.replace(/\D/g, ''));
+  var seedInner = seed;
 
   // Use the local date as the seed
   var rand = function() {
-    seed = (a * seed + c) % m;
-    return seed / m;
+    seedInner = (a * seedInner + c) % m;
+    return seedInner / m;
   };
 
   return rand;

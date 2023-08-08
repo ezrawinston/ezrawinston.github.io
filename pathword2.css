@@ -1,4 +1,4 @@
-/* styles.css */
+/* Copyright 2023 Ezra Winston. All rights reserved. */
 
 * {
     margin: 0;
@@ -36,12 +36,9 @@ body {
     overflow: hidden;
 }
 
-.container:hover {
-    transform: translateY(-5px);
-}
 
 .title {
-    margin-bottom: 41px;
+    margin-bottom: 40px;
     font-size: 40px;
     font-weight: 300;
     margin-left: -35px;
@@ -115,19 +112,29 @@ body {
 
 .alphabet span {
     margin: 1px;
+    margin-top: 2px;
     font-weight: 300;
     /*transition: color 0.3s;*/
     /*font-size: max(20px, min(calc(2.857vw + 10.57px),26px));*/
     font-size: 20px;
     vertical-align: middle;
     /*width: 25px;*/
-    /*height: 25px;*/
+    height: 21.8px;
     display: flex;
     padding-left: 2px;
     padding-right: 2px;
     justify-content: center;
     align-items: center;
+    line-height: 20px;
+    padding-top: 1px;
+    /*height: 34px;*/
 }
+
+    /*font-size: 20px; !* Size of the text *!*/
+    /*border-radius: 50%; !* Make it circular *!*/
+    /*width: 34px; !* Width of the button *!*/
+    /*height: 34px; !* Height of the button *!*/
+    /*line-height: 30px;*/
 
 .alphabet span.included {
     color: #FFFFFF;
@@ -311,7 +318,11 @@ body {
 
 .win2 {
     margin-bottom: 5px;
-    width: 200px;
+    width: 220px;
+    font-size: 18px;
+}
+
+.win-container p {
     font-size: 18px;
 }
 
@@ -336,7 +347,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     font-size: 18px;
-    text-align: center;
+    text-align: left;
 }
 
 
@@ -402,7 +413,7 @@ body {
     color: #FFFFFF;
     /*background-color: #E67A7A;*/
     background-color: #cec2c2;
-    border-width: 0px;
+    border-color: #cec2c2;
 }
 
 .grid button.highlighted-red:hover {
@@ -448,20 +459,37 @@ body {
     margin-top: -19px;
     margin-right: -19px;
     background-color: transparent;
-    /*border: none;*/
+}
+
+.rules-btn:hover {
+    border-color: #555; /* slightly darker border */
+    color: #555; /* slightly darker text */
+    background-color: #f7f7f7; /* very subtle background color change */
+    cursor: pointer; /* Changes the mouse cursor to a hand when hovering over the button */
+}
+
+.glow-btn {
     transition: box-shadow 0.5s ease-in-out;
-    box-shadow: 0px 0px 5px 5px rgba(128, 128, 128, 0.5); /* Adjust color and size as needed */
+    box-shadow: 0px 0px 5px 5px rgba(127, 208, 109, 1); /* Adjust color and size as needed */
     animation: glow 2s ease-in-out infinite;
 }
 
 @keyframes glow {
     0% {
-        box-shadow: 0px 0px 5px 5px rgba(128, 128, 128, 0.5);
+        box-shadow: 0px 0px 2px 2px rgba(127, 208, 109, 1);
     }
     50% {
-        box-shadow: 0px 0px 10px 10px rgba(128, 128, 128, 0);
+        box-shadow: 0px 0px 10px 10px rgba(127, 208, 109, 0.2);
     }
     100% {
-        box-shadow: 0px 0px 5px 5px rgba(128, 128, 128, 0.5);
+        box-shadow: 0px 0px 2px 2px rgba(127, 208, 109, 1);
     }
+}
+
+.pathIcons {
+  display: flex;
+  flex-direction: row;
+  width: 200px;
+  flex-wrap: wrap;
+  column-gap: 6px;
 }
