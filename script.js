@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 }
 
     const rulesBtn = document.querySelector('.rules-btn');
+    console.log(localStorage)
     if (!localStorage.getItem('visited')) {
             rulesBtn.classList.add('glow-btn');
     }
