@@ -418,7 +418,7 @@ async function getAndUpdateAvg(puzzleNumber, steps) {
         'X-API-KEY': "199c9cd1-6384-424b-91ee-8197dd4f097f",
         'Content-Type': 'application/json',
     };
-    const apiUrl = `https://api.keyvalue.rocks/db/test/items/${puzzleNumber}`
+    const apiUrl = `https://proxy.cors.sh/https://api.keyvalue.rocks/db/test/items/${puzzleNumber}`
 
     try {
         // Start with the GET request
