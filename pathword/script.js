@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // Generate a secret word
-    const secretWord = "SOLVE"; // await getSecretWord();
-    rng = seedRNG(5)
+    const secretWord =  await getSecretWord();
+    // rng = seedRNG(5)
 
     // Create a list of alphabets excluding the letter not present in the secret word
     createAlphabet();
@@ -193,10 +193,17 @@ function splitIntoChunks(array, chunkSize) {
 function checkWin(secretWord) {
     const revealedLetters = Array.from(document.querySelectorAll('.answer-letter')).map(div => div.textContent).join('');
     if (revealedLetters === secretWord) {
+        if(!won && !storedRandomSeed) {
+            // document.querySelector('.avg-steps-inner').textContent = "";
+            document.querySelector('.avg-steps').style.display = "block";
+            getAndUpdateAvg(currentPuzzleNumber, steps).then(avg => {
+                document.querySelector('.avg-steps-inner').textContent = avg.toFixed(1);
+            });
+        }
         const winOverlay = document.getElementById('win-overlay');
         setTimeout(() => {
             winOverlay.style.display = 'flex';
-        }, won? 0 : 1000);
+        }, won? 0 : 800);
         arrows = pathIcons.map(step => step[0])
         rows = splitIntoChunks(arrows, 5).map(row => row.join(' '))
         document.querySelector('.pathIcons').innerHTML = rows.join('<br/>')
@@ -213,13 +220,7 @@ function checkWin(secretWord) {
         // Reloading the page
             location.reload();
         });
-        if(!won && !storedRandomSeed) {
-            document.querySelector('.avg-steps-inner').textContent = "";
-            document.querySelector('.avg-steps').style.display = "block";
-            getAndUpdateAvg(currentPuzzleNumber, steps).then(avg => {
-                document.querySelector('.avg-steps-inner').textContent = avg.toFixed(1);
-            });
-        }
+
         if (!won) {
             localStorage.removeItem('randomPuzzleSeed');
         }
@@ -382,94 +383,47 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
-function createBin() {
-    let req = new XMLHttpRequest();
 
-    req.onreadystatechange = () => {
-      if (req.readyState == XMLHttpRequest.DONE) {
-        console.log(req.responseText);
-      }
-    };
-
-    req.open("POST", "https://api.keyvalue.rocks/db?collection=test", true);
-    req.setRequestHeader("Content-Type", "application/json");
-    req.setRequestHeader("X-API-KEY", "199c9cd1-6384-424b-91ee-8197dd4f097f");
-    req.send();
-}
-
-function testBin() {
-    let req = new XMLHttpRequest();
-
-    req.onreadystatechange = () => {
-      if (req.readyState == XMLHttpRequest.DONE) {
-        console.log(JSON.parse(req.responseText)["zap"]);
-      }
-    };
-
-    req.open("GET", "https://api.keyvalue.rocks/db/pw_stats/", true);
-    req.setRequestHeader("Content-Type", "application/json");
-    req.setRequestHeader("X-API-KEY", "199c9cd1-6384-424b-91ee-8197dd4f097f");
-    req.send();
-}
 
 async function getAndUpdateAvg(puzzleNumber, steps) {
     // Define the headers, including the API key
     const headers = {
-        'X-API-KEY': "199c9cd1-6384-424b-91ee-8197dd4f097f",
+        'X-API-KEY': "64d50f53a3ea467b97978d23",
         'Content-Type': 'application/json',
     };
-    const apiUrl = `https://proxy.cors.sh/https://api.keyvalue.rocks/db/test/items/${puzzleNumber}`
+    const apiUrl = `https://pwstats-9697.restdb.io/rest/counts`
 
     try {
         // Start with the GET request
-        let response = await fetch(apiUrl, {
+        let response = await fetch(apiUrl+"?q="+JSON.stringify({"puzzle": puzzleNumber}), {
             method: 'GET',
             headers: headers,
         });
 
         // If status is 404, make a PUT request with the provided JSON body
-        if (response.status === 404) {
+        data = await response.json();
+        if(data.length ===0) {
             response = await fetch(apiUrl, {
-                method: 'PUT',
+                method: 'POST',
                 headers: headers,
-                body: JSON.stringify({"n": 1, "s": steps}), // you'll provide the putJson later
+                body: JSON.stringify({"puzzle": puzzleNumber, "plays": 1, "steps": steps}), // you'll provide the putJson later
             });
-
-            // You might want to handle the PUT response, for example, check if it was successful
-            if (!response.ok) {
-                throw new Error(`PUT request failed with status: ${response.status}`);
-            }
             return steps;
 
         } else {
-            // If status is not 404, log the result of the GET request
-            const data = await response.json();
-            console.log(data);
-
-            // Make a PATCH request for the update
-            response = await fetch(apiUrl, {
+            console.log(data)
+            console.log(data[0])
+            data = data[0]
+            response = await fetch(apiUrl +"/" +data['_id'], {
                 method: 'PATCH',
                 headers: headers,
-                body: JSON.stringify({"n": data["n"] + 1, "s": data["s"] + steps}), // you'll provide the updateJson later
+                body: JSON.stringify({"plays": data["plays"] + 1, "steps": data["steps"] + steps}), // you'll provide the updateJson later
             });
 
-            // Handle the PATCH response
-            if (!response.ok) {
-                throw new Error(`PATCH request failed with status: ${response.status}`);
-            }
-
-            return (data["s"] + steps)/(data["n"] + 1);
+            return (data["steps"] + steps)/(data["plays"] + 1);
         }
 
     } catch (error) {
         console.error('There was an error:', error.message);
     }
 }
-
-// Usage:
-// Define your API key, URL, and JSON bodies for the PUT and PATCH actions
-// const apiKey = "YOUR_API_KEY";
-// const apiUrl = "YOUR_API_URL";
-// const updateJson = { /* your update json here */ };
-// const putJson = { /* your put json here */ };
-// accessAPI(apiUrl, apiKey, updateJson, putJson);

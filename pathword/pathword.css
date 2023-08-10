@@ -210,7 +210,6 @@ body {
 .steps {
     font-size: 20px;
 }
-
 .instructions-overlay {
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
@@ -221,20 +220,22 @@ body {
     display: none;
     align-items: center;
     justify-content: center;
+    overflow: hidden;  /* Prevents scrolling on the overlay */
 }
 
 .instructions-container {
-    position: absolute;
+    position: relative; /* changed from absolute to relative */
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     width: 100%;
     max-width: 400px;
     display: flex;
-    justify-content: center;
-    flex: 1;
+    /*justify-content: center;*/
     flex-direction: column;
     align-items: center;
+    max-height: 90vh; /* height is 90% of the viewport height */
+    overflow-y: auto; /* Enables vertical scrolling */
 }
 
 
@@ -317,13 +318,14 @@ body {
 
 .win2 {
     margin-bottom: 5px;
-    margin-top: 23px;
+    margin-top: 31px;
     width: 220px;
     font-size: 18px;
 }
 
-.win-container p {
+.win3 {
     font-size: 18px;
+    margin-top: 8px;
 }
 
 .error-overlay {
@@ -541,29 +543,47 @@ body {
 .avg-steps {
     display: none;
     margin-top: 3px;
+    font-size: 16px;
 }
 
 .random-puzzle {
-    background-color: #59b358;
-    color: #ffffff;
+    background-color: #ffffff;
+    color: #3fa23c;
     /*border: none;*/
-    padding: 1px 3px;
+    /*padding: 0px;1px 3px;*/
+    padding: 0px;
     font-size: 18px;
     /*border-radius: 2px;*/
     cursor: pointer;
     text-align: center;
     /*width: 110px;*/
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: none;
+    /*1px solid #ccc;*/
+    /*border-radius: 5px;*/
+    text-decoration: underline;
 }
 
 @media (hover: hover) {
     .random-puzzle:hover {
-        background-color: #3fa23c;
+        color: #59b358;
     }
 }
 
 .howto {
     width: 260px;
     /*height: 10px;*/
+}
+
+.loading::after {
+  animation: dotty steps(1,end) 1.2s infinite;
+  content: '';
+}
+
+@keyframes dotty {
+    0%   { content: ''; }
+    20%  { content: '.'; }
+    40%  { content: '..'; }
+    60%  { content: '...'; }
+    80% { content: '....'; }
+    100% { content: ''; }
 }
