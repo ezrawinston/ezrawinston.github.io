@@ -57,14 +57,22 @@
 <div class="instructions-overlay" id="instructions-overlay">
     <div class="instructions-container">
          <button class="close-btn"></button>
-        <h2>PathWord</h2>
-        <p>Figure out the secret word using as few steps as possible!</p>
-        <h3>How to Play</h3>
-        <p> You create a path through the grid. For each letter in your path, you'll find out if it's in the word or not. One letter is already ruled out. </p>
-        <p>Choose where to start by clicking on a letter in the grid. Then choose where to move to. You can move up to three spaces horizontally, vertically, or diagonally. </p>
-        <p>Check back every day for a new puzzle.</p>
+        <h2>how to play</h2>
+        <ul class="custom-list">
+            <li>find the 5-letter pathword by making a path through the grid, using as few steps as possible!</li>
+            <li>to start, one letter is ruled out, shown in <span class="gray">gray</span>. the remaining 25 form a grid</li>
+            <li>first chose your starting position, then choose where to move. you can move <span style="font-weight:bold">up to 3 spaces horizontally, vertically, or diagonally</span></li>
+            <li>for each letter in your path, you'll find out if it's <span class="green">in the word</span> or <span class="gray">not</span></li>
+            <li>passing over a correct letter reveals <span style="font-weight:bold">all occurrences</span> of the letter in the word will be revealed </li>
+        </ul>
         <img src="howto.gif" class="howto"/>
-        <button class="close-instructions" id="close-instructions">Let's play!</button>
+        <h2>tips</h2>
+        <ul class="custom-list">
+            <li class="li2">the answer is never a plural noun ending in "s"</li>
+            <li class="li2">the first move can reveal up to 4 spaces</li>
+        </ul>
+        <div class="checkback">check back every day for a new puzzle!</div>
+        <button class="close-instructions" id="close-instructions">let's play!</button>
 <!--        <div class="copyright">© 2023 Ezra Winston</div>-->
     </div>
 </div>

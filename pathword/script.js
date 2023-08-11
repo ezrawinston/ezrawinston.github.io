@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const winOverlay = document.getElementById('win-overlay');
     const puzzleDate = document.querySelector('.puzzle-date');
     const puzzleNumber = document.querySelectorAll('.puzzle-number');
-
     storedRandomSeed = JSON.parse(localStorage.getItem('randomPuzzleSeed'));
     if (storedRandomSeed) {
         rng = seedRNG(storedRandomSeed);
@@ -87,6 +86,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     rulesBtn.addEventListener('click', () => {
         instructionsOverlay.style.display = 'flex';
+        document.body.classList.add('noscroll');
         rulesBtn.classList.remove('glow-btn')
         if (!localStorage.getItem('visited')) {
             localStorage.setItem('visited', true);
@@ -97,6 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     closeButtons.forEach(btn =>{btn.addEventListener('click', () => {
         instructionsOverlay.style.display = 'none';
         winOverlay.style.display = 'none';
+        document.body.classList.remove('noscroll');
     })});
 
     createGrid();
