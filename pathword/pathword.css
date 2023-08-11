@@ -274,7 +274,8 @@ body {
 .custom-list .li2 {
     position: relative;
     padding-left: 1em; /* Gives space for the "-" marker */
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+    width: 320px;
 }
 
 
@@ -290,7 +291,7 @@ body {
     color: #ffffff;
     border: none;
     padding: 5px 8px;
-    font-size: 14px;
+    font-size: 16px;
     border-radius: 3px;
     cursor: pointer;
     text-align: center;
@@ -635,6 +636,6 @@ body {
     color: #444;
     font-weight: 400;
     text-align: left;
-    font-size: 20px;
-    margin: 8px auto 15px auto;
+    font-size: 19px;
+    margin: 10px auto 15px auto;
 }
