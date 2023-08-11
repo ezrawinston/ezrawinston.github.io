@@ -1048,7 +1048,6 @@ juicy
 jumbo
 jumpy
 junta
-junto
 juror
 kappa
 karma
@@ -1171,7 +1170,6 @@ major
 maker
 mambo
 mamma
-mammy
 manga
 mange
 mango
@@ -1185,9 +1183,7 @@ march
 marry
 marsh
 mason
-masse
 match
-matey
 mauve
 maxim
 maybe
@@ -1216,7 +1212,6 @@ milky
 mimic
 mince
 miner
-minim
 minor
 minty
 minus
@@ -1243,7 +1238,6 @@ motel
 motif
 motor
 motto
-moult
 mound
 mount
 mourn
@@ -1334,8 +1328,6 @@ ounce
 outdo
 outer
 outgo
-ovary
-ovate
 overt
 ovine
 ovoid
@@ -1520,7 +1512,6 @@ rajah
 rally
 ramen
 ranch
-randy
 range
 rapid
 rarer
