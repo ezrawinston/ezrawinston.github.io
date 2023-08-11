@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const winOverlay = document.getElementById('win-overlay');
     const puzzleDate = document.querySelector('.puzzle-date');
     const puzzleNumber = document.querySelectorAll('.puzzle-number');
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     storedRandomSeed = JSON.parse(localStorage.getItem('randomPuzzleSeed'));
     if (storedRandomSeed) {
         rng = seedRNG(storedRandomSeed);
@@ -40,7 +41,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     function createAlphabet() {
-        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         alphabet.split('').forEach((letter, index) => {
             const letterSpan = document.createElement('span');
             letterSpan.textContent = letter;
@@ -49,10 +49,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         });
     }
-
-    // Generate a secret word
     const secretWord =  await getSecretWord();
-    // rng = seedRNG(5)
+    state = localStorage[currentPuzzleNumber];
+    if(state) {
+        state = JSON.parse(state)
+        won = true;
+        pathIcons = state.pathIcons
+        steps = state.steps
+        alphabet.split('').forEach( letter => {updateAnswer(letter,secretWord)});
+        document.querySelectorAll('.step-count').forEach(span => {span.textContent = steps});
+    }
+
 
     // Create a list of alphabets excluding the letter not present in the secret word
     createAlphabet();
@@ -170,14 +177,10 @@ function handleMove(newPos,secretWord) {
     checkWin(secretWord);
 }
 
-function gameState(numNew) {
+function gameState() {
     return {
-        "path" : path,
-        "currentPos" : currentPos,
-        "numNew": numNew,
         "pathIcons" : pathIcons,
         "steps": steps,
-        "won" : won
     };
 }
 
@@ -226,6 +229,9 @@ function checkWin(secretWord) {
             localStorage.removeItem('randomPuzzleSeed');
         }
         won = true;
+        if(!storedRandomSeed) {
+            localStorage[currentPuzzleNumber] = JSON.stringify(gameState())
+        }
         // pathIcons[0][0] = "▶️"
         // pathIconsContainer = document.querySelector('.pathIcons')
         // pathIcons.forEach(step => {
