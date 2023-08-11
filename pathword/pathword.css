@@ -289,9 +289,9 @@ body {
     background-color: #4caf50;
     color: #ffffff;
     border: none;
-    padding: 5px 10px;
+    padding: 5px 8px;
     font-size: 14px;
-    border-radius: 5px;
+    border-radius: 3px;
     cursor: pointer;
     text-align: center;
     margin: auto;
@@ -546,12 +546,14 @@ body {
 .green{
     color: #FFFFFF;
     background-color: #59b358;
+    padding: 1px 2px;
 }
 
 .gray {
     /*color: #E67A7A;*/
     color: #FFFFFF;
     background-color: #cec2c2;
+    padding: 1px 2px;
 }
 
 .close-btn {
