@@ -251,7 +251,6 @@ botch
 bough
 boule
 bound
-bowel
 boxer
 brace
 braid
@@ -485,7 +484,6 @@ crone
 crony
 crook
 cross
-croup
 crowd
 crown
 crude
@@ -547,7 +545,6 @@ devil
 diary
 dicey
 digit
-dilly
 dimly
 diner
 dingo
@@ -651,7 +648,6 @@ emcee
 empty
 enact
 endow
-enema
 enemy
 enjoy
 ennui
@@ -720,7 +716,6 @@ fetus
 fever
 fewer
 fiber
-fibre
 ficus
 field
 fiend
@@ -838,7 +833,6 @@ gauze
 gavel
 gawky
 gayer
-gayly
 gazer
 gecko
 geeky
@@ -849,7 +843,6 @@ ghost
 ghoul
 giant
 giddy
-gipsy
 girly
 girth
 given
@@ -912,7 +905,6 @@ gripe
 groan
 groin
 groom
-grope
 gross
 group
 grout
@@ -938,7 +930,6 @@ gummy
 guppy
 gusto
 gusty
-gypsy
 habit
 hairy
 halve
@@ -1820,7 +1811,6 @@ snort
 snout
 snowy
 snuck
-snuff
 soapy
 sober
 soggy
