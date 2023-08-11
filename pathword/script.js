@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         steps = state.steps
         alphabet.split('').forEach( letter => {updateAnswer(letter,secretWord)});
         document.querySelectorAll('.step-count').forEach(span => {span.textContent = steps});
+        checkWin(secretWord)
     }
 
 
