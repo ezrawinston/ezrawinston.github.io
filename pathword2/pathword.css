@@ -1,0 +1,716 @@
+/* Copyright 2023 Ezra Winston. All rights reserved. */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 75vh;
+    padding: 20px;
+    color: #333;
+}
+
+.noscroll {
+    overflow: hidden;
+}
+
+.header {
+    display: flex; /* Use flex layout */
+    justify-content: space-between; /* Align items to the left and right */
+}
+
+
+.container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+    transition: transform 0.3s;
+    min-width: 330px;
+    overflow: hidden;
+}
+
+
+.title {
+    margin-bottom: 40px;
+    font-size: 40px;
+    font-weight: 300;
+    margin-left: -35px;
+    margin-top: -30px;
+    /*vertical-align: middle;*/
+    display: flex;
+    padding-left: 2px;
+    padding-right: 2px;
+    text-align: left;
+    /*justify-content: center;*/
+    /*align-items: center;*/
+}
+
+/*.title span{*/
+/*    padding-left: 2px;*/
+/*    padding-right: 2px;*/
+/*}*/
+
+.title-P {
+    color: #FFFFFF;
+    background-color: #59b358;
+    margin-right: 3px;
+    padding-left: 15px;
+    padding-right: 3px;
+    padding-top: 5px;
+}
+.title-A {
+    color: #FFFFFF;
+    background-color: #cec2c2;
+    margin-right: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 5px;
+}
+
+.title-W {
+    margin-right: 1px;
+    padding-top: 5px;
+    color: #555555;
+}
+
+/*.title-W {*/
+/*    color: #FFFFFF;*/
+/*    background-color: #cec2c2;*/
+/*    margin-left: 1px;*/
+/*    margin-right: 1px;*/
+/*    padding-left: 3px;*/
+/*    padding-right: 3px;*/
+/*}*/
+
+.info {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 18px;
+    margin-top: 4px;
+    margin-bottom: -15px;
+    margin-left: -5px;
+    margin-right: -5px;
+    color: #777;
+}
+
+.alphabet {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 28px;
+}
+
+.alphabet span {
+    margin: 1px;
+    margin-top: 2px;
+    font-weight: 300;
+    /*transition: color 0.3s;*/
+    /*font-size: max(20px, min(calc(2.857vw + 10.57px),26px));*/
+    font-size: 20px;
+    vertical-align: middle;
+    /*width: 25px;*/
+    height: 21.8px;
+    display: flex;
+    padding-left: 2px;
+    padding-right: 2px;
+    justify-content: center;
+    align-items: center;
+    line-height: 20px;
+    padding-top: 1px;
+    /*height: 34px;*/
+}
+
+    /*font-size: 20px; !* Size of the text *!*/
+    /*border-radius: 50%; !* Make it circular *!*/
+    /*width: 34px; !* Width of the button *!*/
+    /*height: 34px; !* Height of the button *!*/
+    /*line-height: 30px;*/
+
+.alphabet span.included {
+    color: #FFFFFF;
+    background-color: #59b358;
+}
+
+.alphabet span.excluded {
+    /*color: #E67A7A;*/
+    color: #FFFFFF;
+    background-color: #cec2c2;
+}
+
+/*.grid {*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(5, 1fr);*/
+/*    gap: 10px;*/
+/*    !*margin: 20px auto;*!*/
+/*    width: max(90%,270px);*/
+/*    margin: 20px auto 20px -200%;*/
+/*}*/
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    /*gap: calc(0.037*max(94% - 20px,270px));*/
+    /*gap:  max(10px, min(calc(4.762vw + 10px - 476.2px), 30px));*/
+    gap: 11px;
+    /*width: calc(94% - 20px); !* 90% of container width minus 20px for left and right margin *!*/
+    /*min-width: 270px; !* Minimum width of 270px *!*/
+    width: 270px;
+    margin: 20px auto;
+}
+
+.grid button {
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    transition: background-color 0.3s, border-color 0.3s,outline-color 0.3s;
+    outline: 1px solid transparent;
+    outline-offset: -1px;
+    color: #444444;
+    font-size: 27px;
+}
+
+@media (hover: hover) {
+    .grid button:hover {
+        background-color: #e0e0e0;
+        outline-color: #444444;
+    }
+}
+
+.grid button span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.grid button.highlighted {
+    outline-color: #b8b8b8;
+    outline-width: 2px;
+    /*background-color: #66ac6a;*/
+    /*background-color: #78CD65;*/
+    background-color: #7FD06D;
+}
+
+
+
+.steps {
+    font-size: 20px;
+}
+.instructions-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;  /* Prevents scrolling on the overlay */
+}
+
+.instructions-container {
+    position: relative; /* changed from absolute to relative */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    /*justify-content: center;*/
+    flex-direction: column;
+    max-height: 90vh; /* height is 90% of the viewport height */
+    overflow-y: auto; /* Enables vertical scrolling */
+}
+
+
+.instructions-container h2 {
+    margin-bottom: 10px;
+    text-align:left;
+    color: #666;
+    font-weight: 400;
+}
+
+.instructions-container h3 {
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+
+.instructions-container p {
+    margin: 10px;
+    text-align: center;
+}
+
+.custom-list {
+    list-style-type: none; /* Removes the default bullet points */
+    padding-left: 0;
+    margin-left: 8px; /* Adjust based on your preference */
+}
+
+.custom-list li {
+    position: relative;
+    padding-left: 1em; /* Gives space for the "-" marker */
+    margin-bottom: 17px;
+}
+
+.custom-list .li2 {
+    position: relative;
+    padding-left: 1em; /* Gives space for the "-" marker */
+    margin-bottom: 10px;
+    width: 320px;
+}
+
+
+.custom-list li::before {
+    content: "-"; /* The "-" marker */
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.close-instructions {
+    background-color: #4caf50;
+    color: #ffffff;
+    border: none;
+    padding: 5px 8px;
+    font-size: 16px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+    margin: auto;
+}
+
+
+.win-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.win-container {
+    position: absolute;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    justify-content: left;
+    flex: 1;
+    flex-direction: column;
+    color: #444;
+}
+
+
+.win-container h2 {
+    margin-bottom: 0px;
+    text-align:left;
+    color: #444;
+    font-weight: 400;
+    font-size: 28px;
+}
+
+.win-container h3 {
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: 400;
+}
+
+.win1 {
+    margin-bottom: 5px;
+    width: 220px;
+    font-size: 18px;
+}
+
+.win2 {
+    margin-bottom: 5px;
+    margin-top: 31px;
+    width: 220px;
+    font-size: 18px;
+}
+
+.win3 {
+    font-size: 18px;
+    margin-top: 8px;
+}
+
+.error-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.error-message {
+    background-color: #e57373;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    text-align: left;
+}
+
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.nav-button {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+    color: #333;
+}
+
+@media (hover: hover) {
+    .nav-button:hover {
+        color: #666;
+        transform: scale(1.1);
+    }
+}
+
+.nav-button:focus {
+    outline: none;
+}
+
+/*.answer {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    gap: 4px;*/
+/*    margin-top: 26px;*/
+/*    margin-bottom: 10px;*/
+/*}*/
+
+.answer-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px; /* Adjust spacing from top as needed */
+}
+
+.answer {
+    display: flex;
+    gap: 4px;
+}
+
+/* Adjusted guess button positioning */
+.guess-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 80%; /* Moves button closer to the answer */
+    margin-left: 5px; /* Adds slight space between answer and button */
+    border: 1px solid #ccc; /* Light gray border */
+    background-color: transparent;
+    color: #333;
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+/*.answer-letter {*/
+.answer-letter {
+    /*display: table-cell;*/
+    color: #666;
+    vertical-align: middle;
+    width: 27px;
+    height: 27px;
+    line-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+}
+
+
+
+.grid button.highlighted-green {
+    color: #FFFFFF;
+    background-color: #7FD06D;
+    border-color: #7FD06D;
+}
+
+@media (hover: hover) {
+    .grid button.highlighted-green:hover {
+        color: #FFFFFF;
+        background-color: #59b358;
+    }
+}
+
+.grid button.highlighted-red {
+    color: #FFFFFF;
+    /*background-color: #E67A7A;*/
+    background-color: #cec2c2;
+    border-color: #cec2c2;
+}
+
+@media (hover: hover) {
+    .grid button.highlighted-red:hover {
+        color: #FFFFFF;
+
+        /*background-color: #cc615e;*/
+        background-color: #af9e9e;
+    }
+}
+
+.grid button.current {
+    outline-color: #777777;
+    outline-width: 2px;
+    outline-offset: 1.5px;
+    border-color: white;
+    /*outline-style: dotted;*/
+}
+
+.answer-letter.correct {
+    background-color: #7FD06D;
+    /*#4caf50;*/
+    color: #ffffff;
+}
+
+/*F7CFBB*/
+
+/*.grid button {*/
+/*    font-size: max(24px, min(calc(3.5715vw - 333.15px), 31.5px));*/
+/*    !* Assuming you want to keep some padding, but adjust or remove as needed *!*/
+/*    !*padding: 10px;*!*/
+/*}*/
+
+.grid button span {
+    /* Centering */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.rules-btn {
+    /*background-color: white; !* White background *!*/
+    border: 1px solid #666;
+    color: #666;
+    text-align: center; /* Center the text */
+    font-size: 20px; /* Size of the text */
+    border-radius: 50%; /* Make it circular */
+    width: 34px; /* Width of the button */
+    height: 34px; /* Height of the button */
+    line-height: 30px;
+    margin-top: -19px;
+    margin-right: -19px;
+    background-color: transparent;
+    transition: color 0.3s;
+}
+
+@media (hover: hover) {
+    .rules-btn:hover {
+        border-color: #555; /* slightly darker border */
+        color: #555; /* slightly darker text */
+        background-color: #f7f7f7; /* very subtle background color change */
+        cursor: pointer; /* Changes the mouse cursor to a hand when hovering over the button */
+    }
+}
+
+.glow-btn {
+    transition: box-shadow 0.5s ease-in-out;
+    box-shadow: 0px 0px 5px 5px rgba(127, 208, 109, 1); /* Adjust color and size as needed */
+    animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0px 0px 2px 2px rgba(127, 208, 109, 1);
+    }
+    50% {
+        box-shadow: 0px 0px 10px 10px rgba(127, 208, 109, 0.2);
+    }
+    100% {
+        box-shadow: 0px 0px 2px 2px rgba(127, 208, 109, 1);
+    }
+}
+
+.pathIcons {
+  display: flex;
+  flex-direction: row;
+  width: 200px;
+  flex-wrap: wrap;
+  column-gap: 6px;
+}
+
+.green{
+    color: #FFFFFF;
+    background-color: #59b358;
+    padding: 1px 2px;
+}
+
+.gray {
+    /*color: #E67A7A;*/
+    color: #FFFFFF;
+    background-color: #cec2c2;
+    padding: 1px 2px;
+}
+
+.close-btn {
+    position: absolute; /* Takes the button out of the regular flow */
+    top: 11px;          /* Adjust this value as per your needs */
+    right: 15px;        /* Adjust this value as per your needs */
+
+    border: none;
+    color: #777;
+    font-size: 18px;     /* Making the "X" bigger */
+    font-weight: 600;    /* Making the "X" skinnier (light font weight) */
+    background-color: transparent;
+    padding: 2px;  /* You can adjust this to control the touch area */
+    cursor: pointer;
+    transition: color 0.3s; /* Smoother hover effect */
+}
+
+
+
+@media (hover: hover) {
+    .close-btn:hover {
+        color: #555; /* Slightly darker text on hover */
+    }
+}
+
+.close-btn:after {
+    /*content: '╳';*/
+    content: '✕';
+}
+
+.avg-steps {
+    display: none;
+    margin-top: 3px;
+    font-size: 16px;
+}
+
+.random-puzzle {
+    background-color: #ffffff;
+    color: #3fa23c;
+    /*border: none;*/
+    /*padding: 0px;1px 3px;*/
+    padding: 0px;
+    font-size: 18px;
+    /*border-radius: 2px;*/
+    cursor: pointer;
+    text-align: center;
+    /*width: 110px;*/
+    border: none;
+    /*1px solid #ccc;*/
+    /*border-radius: 5px;*/
+    text-decoration: underline;
+}
+
+@media (hover: hover) {
+    .random-puzzle:hover {
+        color: #59b358;
+    }
+}
+
+.howto {
+    width: 240px;
+    margin: 5px auto 15px auto;
+    /*height: 10px;*/
+}
+
+.loading::after {
+  animation: dotty steps(1,end) 1.2s infinite;
+  content: '';
+}
+
+@keyframes dotty {
+    0%   { content: ''; }
+    20%  { content: '.'; }
+    40%  { content: '..'; }
+    60%  { content: '...'; }
+    80% { content: '....'; }
+    100% { content: ''; }
+}
+
+.checkback {
+    color: #444;
+    font-weight: 400;
+    text-align: left;
+    font-size: 19px;
+    margin: 10px auto 15px auto;
+}
+
+.guess-form {
+    display: flex;
+    justify-content: space-between;
+    width: 150px; /* Adjust this width to match the total width of the letters above */
+}
+
+#guess-input {
+    font-size: 26px;
+    letter-spacing: 5px; /* Space between letters */
+    text-align: center;
+    background-color: white;
+    border: 2px solid black;
+    width: 150px; /* Matches the width of the letters above */
+    padding: 5px;
+    height: 40px;
+    outline: none;
+}
+
+.guess-overlay {
+    background-color: rgba(0, 0, 0, 0.2); /* Slightly transparent overlay */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.guess-form {
+    background-color: rgba(255, 255, 255, 1); /* Translucent white for readability */
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adds subtle shadow for depth */
+    position: relative;
+}
+
