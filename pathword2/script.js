@@ -113,12 +113,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     createGrid();
 
     const guessBtn = document.querySelector('.guess-btn');
+    const guessInput = document.getElementById('guess-input');
 
     guessBtn.addEventListener('click', () => {
         if(won) {
             checkWin(secretWord)
         } else {
             guessOverlay.style.display = 'flex';
+            guessInput.focus()
         }
         // document.body.classList.add('noscroll');
     });
@@ -128,7 +130,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         handleGuessSubmit(event, secretWord);  // Call the function with both arguments
     });
 
-    const guessInput = document.getElementById('guess-input');
+
 
     guessInput.addEventListener('input', function() {
         enforceMaxLengthAndLetters(this);
