@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const puzzleDate = document.querySelector('.puzzle-date');
     const puzzleNumber = document.querySelectorAll('.puzzle-number');
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    storedRandomSeed = JSON.parse(localStorage.getItem('randomPuzzleSeed'));
+    storedRandomSeed = JSON.parse(localStorage.getItem('randomPuzzleSeed_2'));
     if (storedRandomSeed) {
         rng = seedRNG(storedRandomSeed);
         // Removing the seed from storage to ensure it's only used once
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
     const secretWord =  await getSecretWord();
-    state = localStorage[currentPuzzleNumber];
+    state = localStorage[currentPuzzleNumber + "_2"];
     if(state) {
         state = JSON.parse(state)
         won = true;
@@ -293,17 +293,17 @@ function checkWinInner(secretWord, revealedLetters) {
         // Generating a random negative seed for the puzzle
             const randomNegativeSeed = -Math.floor(Math.random() * 1000);
         // Storing the random seed in localStorage
-            localStorage.setItem('randomPuzzleSeed', randomNegativeSeed);
+            localStorage.setItem('randomPuzzleSeed_2', randomNegativeSeed);
         // Reloading the page
             location.reload();
         });
 
         if (!won) {
-            localStorage.removeItem('randomPuzzleSeed');
+            localStorage.removeItem('randomPuzzleSeed_2');
         }
         won = true;
         if(!storedRandomSeed) {
-            localStorage[currentPuzzleNumber] = JSON.stringify(gameState())
+            localStorage[currentPuzzleNumber + "_2"] = JSON.stringify(gameState())
         }
         // pathIcons[0][0] = "▶️"
         // pathIconsContainer = document.querySelector('.pathIcons')
